@@ -17,7 +17,9 @@ builder.Services.AddDbContext<DestinationBucketDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Dev")));
 
 var app = builder.Build();
-
+//app.UseCors(options => options.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+//app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+app.UseCors(options => options.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -26,6 +28,6 @@ if (app.Environment.IsDevelopment())
 {
     
 }
-
+app.UseAuthorization();
 app.MapControllers();
 app.Run();
