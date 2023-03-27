@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="BCrypt.Net" Version="0.1.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-preview.2.23128.3" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.0-preview.2.23128.3" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="8.0.0-preview.2.23128.3" />
@@ -26,31 +27,24 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Remove="Controller\**" />
       <Compile Remove="Exceptions\**" />
       <Compile Remove="Repository\**" />
-      <Compile Remove="Service\**" />
+
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Remove="Controller\**" />
       <EmbeddedResource Remove="Exceptions\**" />
       <EmbeddedResource Remove="Repository\**" />
-      <EmbeddedResource Remove="Service\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Controller\**" />
       <None Remove="Exceptions\**" />
       <None Remove="Repository\**" />
-      <None Remove="Service\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <Content Remove="Controller\**" />
       <Content Remove="Exceptions\**" />
       <Content Remove="Repository\**" />
-      <Content Remove="Service\**" />
     </ItemGroup>
 
 </Project>
