@@ -7,17 +7,44 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="BCrypt.Net" Version="0.1.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-preview.2.23128.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.0-preview.2.23128.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="8.0.0-preview.2.23128.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0-preview.2.23128.3">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.0-preview.2.23128.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0-preview.2.23128.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0-preview.2.23128.3">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
       <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
       <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controller" />
-      <Folder Include="Exceptions" />
-      <Folder Include="Model" />
-      <Folder Include="Repository" />
-      <Folder Include="Service" />
+      <Compile Remove="Exceptions\**" />
+      <Compile Remove="Repository\**" />
+
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Exceptions\**" />
+      <EmbeddedResource Remove="Repository\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Exceptions\**" />
+      <None Remove="Repository\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Exceptions\**" />
+      <Content Remove="Repository\**" />
     </ItemGroup>
 
 </Project>
