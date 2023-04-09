@@ -3,7 +3,6 @@ import { User } from "../../Model/User";
 import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
-  const [user, setUser] = useState<User>();
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -66,7 +65,6 @@ export const Register = () => {
               className="submit-btn btn btn-primary"
               onClick={async () => {
                 const url = "https://localhost:7179/api/User/register";
-                setUser({ email: email, name: name, password: password });
                 let header: RequestInit = {
                   body: JSON.stringify({
                     email: email,
