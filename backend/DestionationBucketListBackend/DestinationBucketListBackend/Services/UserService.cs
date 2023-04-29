@@ -62,7 +62,7 @@ public class UserService : IUserService
                 existingUser = null;
             }
 
-            var badResult = new AuthResult()
+            var result = new AuthResult()
             {
                 AccessToken = string.Empty,
                 Error = string.Empty,
@@ -72,12 +72,11 @@ public class UserService : IUserService
 
             if (existingUser != null)
             {
-                badResult.Error = ("Exista deja un cont inregistrat cu acest email!");
-                return badResult;
+                result.Error = ("Exista deja un cont inregistrat cu acest email!");
+                return result;
             }
 
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-            user.Name = user.Email.Split("@")[0];
             try
             {
                 var isCreated = await _dataContext.Users.AddAsync(user);
@@ -98,9 +97,9 @@ public class UserService : IUserService
             }
             catch (Exception exception)
             {
-                badResult.Error = exception.StackTrace!;
+                result.Error = exception.StackTrace!;
             }
 
-            return badResult;
+            return result;
         }
 }

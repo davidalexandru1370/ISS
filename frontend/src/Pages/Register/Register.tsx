@@ -33,7 +33,7 @@ export const Register = () => {
               className="form-control mt-1"
               placeholder="e.g Jane Doe"
               onChange={(x) => {
-                setName(x.currentTarget.innerText);
+                setName(x.target.value);
               }}
             />
           </div>
@@ -44,7 +44,7 @@ export const Register = () => {
               className="form-control mt-1"
               placeholder="jado@awesomecompany.com"
               onChange={(x) => {
-                setEmail(x.currentTarget.innerText);
+                setEmail(x.target.value);
               }}
             />
           </div>
@@ -55,7 +55,7 @@ export const Register = () => {
               className="form-control mt-1"
               placeholder="Password"
               onChange={(x) => {
-                setPassword(x.currentTarget.innerText);
+                setPassword(x.target.value);
               }}
             />
           </div>
@@ -63,24 +63,7 @@ export const Register = () => {
             <button
               type="submit"
               className="submit-btn btn btn-primary"
-              onClick={async () => {
-                const url = "https://localhost:7179/api/User/register";
-                let header: RequestInit = {
-                  body: JSON.stringify({
-                    email: email,
-                    name: name,
-                    password: password,
-                  }),
-                  method: "POST",
-                  credentials: "include",
-                  headers: {
-                    "Content-type": "application/json",
-                  },
-                  mode: "cors",
-                };
-                let response = await fetch(url, header);
-                console.log(response);
-              }}
+              onClick={async () => {}}
             >
               Submit
             </button>
