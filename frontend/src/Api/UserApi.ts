@@ -22,8 +22,15 @@ export const login = async (user: User) => {
 
 export const register = async (user: User) => {
   let url = UserEndpoints.register;
-  let response = await (
-    await fetch(url, createHeader(Methods.POST, user))
-  ).json();
-  return await response;
+  let authResult = await fetch(url, createHeader(Methods.POST, user))
+    .then(async (response: Response) => {
+      return await response.json();
+    })
+    .then((authResult: AuthResult) => {
+      return authResult;
+    });
+
+  if (authResult.result === false) {
+    throw new Error(authResult.error!);
+  }
 };

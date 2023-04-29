@@ -1,12 +1,24 @@
 import React, { useState } from "react";
 import { User } from "../../Model/User";
 import { useNavigate } from "react-router-dom";
+import { register } from "../../Api/UserApi";
+import { toast } from "react-toastify";
+import { checkIfIsEmailValid } from "../../Utilities/Utilities";
 
 export const Register = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
+
+  const checkIfAllInputFieldsAreCorrect = () => {
+    return !(
+      name === "" ||
+      email === "" ||
+      password === "" ||
+      checkIfIsEmailValid(email) === false
+    );
+  };
 
   return (
     <div className="Login-form-container">
@@ -63,7 +75,21 @@ export const Register = () => {
             <button
               type="submit"
               className="submit-btn btn btn-primary"
-              onClick={async () => {}}
+              onClick={async () => {
+                const user: User = {
+                  email: email,
+                  password: password,
+                  name: name,
+                };
+                try {
+                  await register(user);
+                } catch (error) {
+                  toast((error as Error).message, {
+                    type: "error",
+                  });
+                }
+              }}
+              disabled={!checkIfAllInputFieldsAreCorrect()}
             >
               Submit
             </button>

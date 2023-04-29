@@ -17,3 +17,8 @@ export const createHeader = (method: Methods, entity?: any) => {
   }
   return headerOptions;
 };
+
+export const checkIfIsEmailValid = (email: string): boolean => {
+  const pattern: RegExp = new RegExp("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+  return pattern.test(email);
+};

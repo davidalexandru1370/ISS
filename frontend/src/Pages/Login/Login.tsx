@@ -3,19 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { login } from "../../Api/UserApi";
 import { User } from "../../Model/User";
+import { checkIfIsEmailValid } from "../../Utilities/Utilities";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
 
-  const checkIfIsEmailValid = (): boolean => {
-    const pattern: RegExp = new RegExp("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
-    return pattern.test(email);
-  };
-
   const checkIfInputFieldsAreCorrect = (): boolean => {
-    return email === "" || password === "" || checkIfIsEmailValid() === false;
+    return (
+      email === "" || password === "" || checkIfIsEmailValid(email) === false
+    );
   };
 
   return (

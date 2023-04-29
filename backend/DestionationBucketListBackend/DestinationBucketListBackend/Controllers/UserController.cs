@@ -62,6 +62,6 @@ public class UserController : ControllerBase
 
         _cookieUtilities.setCookiePrivate("accessToken", response.AccessToken, HttpContext, 7);
         _cookieUtilities.setCookiePrivate("refreshToken", response.RefreshToken, HttpContext, 7);
-        return Ok();
+        return Ok(response);
     }
 }
