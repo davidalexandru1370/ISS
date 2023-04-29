@@ -29,7 +29,7 @@ public class UserService : IUserService
 
             if (_user == null || BCrypt.Net.BCrypt.Verify(user.Password, _user.Password) == false)
             {
-                badResult.Error = "Adresa de email sau parola gresita!";
+                badResult.Error = "Email address or password is wrong!";
                 return badResult;
             }
 

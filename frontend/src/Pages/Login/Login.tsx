@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { User } from "../../Model/User";
+import { login } from "../../Api/UserApi";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -31,7 +34,7 @@ const Login = () => {
               className="form-control mt-1"
               placeholder="Enter email"
               onChange={(x) => {
-                setEmail(x.currentTarget.innerText);
+                setEmail(x.currentTarget.value);
               }}
             />
           </div>
@@ -42,7 +45,7 @@ const Login = () => {
               className="form-control mt-1"
               placeholder="Enter password"
               onChange={(x) => {
-                setPassword(x.currentTarget.innerText);
+                setPassword(x.currentTarget.value);
               }}
             />
           </div>
@@ -50,7 +53,19 @@ const Login = () => {
             <button
               type="submit"
               className="submit-btn btn btn-primary"
-              onClick={async () => {}}
+              onClick={async () => {
+                const user: User = {
+                  email: email,
+                  password: password,
+                };
+                try {
+                  await login(user);
+                } catch (error) {
+                  toast((error as Error).message, {
+                    type: "error",
+                  });
+                }
+              }}
             >
               Submit
             </button>

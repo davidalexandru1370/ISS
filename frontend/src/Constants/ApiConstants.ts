@@ -1,4 +1,4 @@
-export const baseUrl = "http://localhost:5191/";
+export const baseUrl = "http://localhost:5041/";
 export const userController = "api/user/";
 
 export enum Methods {
@@ -14,6 +14,6 @@ interface UserEndpoint {
 }
 
 export const UserEndpoints: UserEndpoint = {
-  login: baseUrl + userController + "login",
+  login: baseUrl + userController + "authentificate",
   register: baseUrl + userController + "register",
 };
