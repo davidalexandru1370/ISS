@@ -72,7 +72,7 @@ public class UserService : IUserService
 
             if (existingUser != null)
             {
-                result.Error = ("Exista deja un cont inregistrat cu acest email!");
+                result.Error = ("There exists an account associated with this email address");
                 return result;
             }
 
