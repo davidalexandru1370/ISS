@@ -1,6 +1,6 @@
-using DestionationBucketListBackend.Utilities.Interfaces;
+using DestinationBucketListBackend.Utilities.Interfaces;
 
-namespace DestionationBucketListBackend.Utilities;
+namespace DestinationBucketListBackend.Utilities;
 
 public class CookieUtilities : ICookieUtilities
 {

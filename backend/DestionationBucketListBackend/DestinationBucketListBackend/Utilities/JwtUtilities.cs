@@ -1,11 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using DestionationBucketListBackend.Model;
-using DestionationBucketListBackend.Utilities.Interfaces;
+using DestinationBucketListBackend.Model;
+using DestinationBucketListBackend.Utilities.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 
-namespace DestionationBucketListBackend.Utilities;
+namespace DestinationBucketListBackend.Utilities;
 
 public class JwtUtilities : IJwtUtilities
 {

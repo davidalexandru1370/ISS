@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DestionationBucketListBackend.Model;
+namespace DestinationBucketListBackend.Model;
 
 [Table("Users")]
 public class User 

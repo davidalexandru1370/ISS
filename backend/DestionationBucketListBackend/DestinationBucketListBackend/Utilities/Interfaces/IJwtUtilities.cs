@@ -1,6 +1,6 @@
-using DestionationBucketListBackend.Model;
+using DestinationBucketListBackend.Model;
 
-namespace DestionationBucketListBackend.Utilities.Interfaces;
+namespace DestinationBucketListBackend.Utilities.Interfaces;
 
 public interface IJwtUtilities
 {

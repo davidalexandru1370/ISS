@@ -1,7 +1,7 @@
-using DestionationBucketListBackend.Model;
+using DestinationBucketListBackend.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace DestionationBucketListBackend.DbContext;
+namespace DestinationBucketListBackend.DbContext;
 
 public class DestinationBucketDbContext : Microsoft.EntityFrameworkCore.DbContext
 {
@@ -9,6 +9,11 @@ public class DestinationBucketDbContext : Microsoft.EntityFrameworkCore.DbContex
     public DestinationBucketDbContext(DbContextOptions<DestinationBucketDbContext> options) : base(options)
     {
         
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseNpgsql(@"Host=localhost;Username=postgres;Password=postgres;Database=DestinationBucketList");
     }
 
     public virtual DbSet<User> Users { get; set; } = null!;

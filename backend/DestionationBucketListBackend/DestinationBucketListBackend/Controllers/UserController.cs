@@ -1,10 +1,10 @@
-using DestionationBucketListBackend.Model;
-using DestionationBucketListBackend.Model.DTO;
-using DestionationBucketListBackend.Service.Interfaces;
-using DestionationBucketListBackend.Utilities.Interfaces;
+using DestinationBucketListBackend.Model;
+using DestinationBucketListBackend.Model.DTO;
+using DestinationBucketListBackend.Service.Interfaces;
+using DestinationBucketListBackend.Utilities.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DestionationBucketListBackend.Controller;
+namespace DestinationBucketListBackend.Controller;
 
 [ApiController]
 [Route("api/[controller]")]

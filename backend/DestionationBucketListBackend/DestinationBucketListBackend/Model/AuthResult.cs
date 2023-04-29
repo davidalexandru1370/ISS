@@ -1,4 +1,4 @@
-namespace DestionationBucketListBackend.Model;
+namespace DestinationBucketListBackend.Model;
 
 public class AuthResult
 {

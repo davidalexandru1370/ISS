@@ -1,4 +1,4 @@
-namespace DestionationBucketListBackend.Model.DTO;
+namespace DestinationBucketListBackend.Model.DTO;
 
 public class UserDto
 {

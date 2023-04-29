@@ -1,6 +1,6 @@
-using DestionationBucketListBackend.Model;
+using DestinationBucketListBackend.Model;
 
-namespace DestionationBucketListBackend.Service.Interfaces;
+namespace DestinationBucketListBackend.Service.Interfaces;
 
 public interface IUserService
 {

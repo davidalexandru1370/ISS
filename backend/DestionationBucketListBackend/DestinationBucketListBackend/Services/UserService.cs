@@ -1,10 +1,10 @@
-using DestionationBucketListBackend.DbContext;
-using DestionationBucketListBackend.Model;
-using DestionationBucketListBackend.Service.Interfaces;
-using DestionationBucketListBackend.Utilities.Interfaces;
+using DestinationBucketListBackend.DbContext;
+using DestinationBucketListBackend.Model;
+using DestinationBucketListBackend.Service.Interfaces;
+using DestinationBucketListBackend.Utilities.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace DestionationBucketListBackend.Service;
+namespace DestinationBucketListBackend.Service;
 
 public class UserService : IUserService
 {

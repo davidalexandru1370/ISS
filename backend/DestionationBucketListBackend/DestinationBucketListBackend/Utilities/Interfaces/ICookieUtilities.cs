@@ -1,4 +1,4 @@
-namespace DestionationBucketListBackend.Utilities.Interfaces;
+namespace DestinationBucketListBackend.Utilities.Interfaces;
 
 public interface ICookieUtilities
 {
