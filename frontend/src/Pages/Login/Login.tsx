@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { User } from "../../Model/User";
-import { login } from "../../Api/UserApi";
 import { toast } from "react-toastify";
+import { login } from "../../Api/UserApi";
+import { User } from "../../Model/User";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigate = useNavigate();
+
+  const checkIfIsEmailValid = (): boolean => {
+    const pattern: RegExp = new RegExp("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+    return pattern.test(email);
+  };
+
+  const checkIfInputFieldsAreCorrect = (): boolean => {
+    return email === "" || password === "" || checkIfIsEmailValid() === false;
+  };
 
   return (
     <div className="Login-form-container">
@@ -51,9 +60,9 @@ const Login = () => {
           </div>
           <div className="d-grid gap-2 mt-3">
             <button
-              type="submit"
               className="submit-btn btn btn-primary"
-              onClick={async () => {
+              onClick={async (e) => {
+                e.preventDefault();
                 const user: User = {
                   email: email,
                   password: password,
@@ -66,13 +75,11 @@ const Login = () => {
                   });
                 }
               }}
+              disabled={checkIfInputFieldsAreCorrect()}
             >
               Submit
             </button>
           </div>
-          <p className="text-center mt-2">
-            <a href="#">Forgot password?</a>
-          </p>
         </div>
       </form>
     </div>
