@@ -1,6 +1,6 @@
 using DestinationBucketListBackend.Model;
 
-namespace DestinationBucketListBackend.Service.Interfaces;
+namespace DestinationBucketListBackend.Services.Interfaces;
 
 public interface IUserService
 {

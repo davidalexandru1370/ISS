@@ -1,6 +1,6 @@
 using DestinationBucketListBackend.Model;
 using DestinationBucketListBackend.Model.DTO;
-using DestinationBucketListBackend.Service.Interfaces;
+using DestinationBucketListBackend.Services.Interfaces;
 using DestinationBucketListBackend.Utilities.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,6 +43,12 @@ public class UserController : ControllerBase
         _cookieUtilities.setCookiePrivate("refreshToken", response.RefreshToken, HttpContext, 7);
 
         return Ok(response);
+    }
+
+    [HttpGet("authorize")]
+    public IActionResult Authorize()
+    {
+        return Ok();
     }
 
     [HttpPost("register")]

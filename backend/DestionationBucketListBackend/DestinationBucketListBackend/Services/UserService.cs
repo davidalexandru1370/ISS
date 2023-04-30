@@ -1,18 +1,18 @@
 using DestinationBucketListBackend.DbContext;
 using DestinationBucketListBackend.Model;
-using DestinationBucketListBackend.Service.Interfaces;
+using DestinationBucketListBackend.Services.Interfaces;
 using DestinationBucketListBackend.Settings;
 using DestinationBucketListBackend.Utilities.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace DestinationBucketListBackend.Service;
+namespace DestinationBucketListBackend.Services;
 
 public class UserService : IUserService
 {
-    private DestinationBucketDbContext _dataContext;
-    private IJwtUtilities _jwtUtilities;
-    private IOptions<AppSettings> _appSettings;
+    private readonly DestinationBucketDbContext _dataContext;
+    private readonly IJwtUtilities _jwtUtilities;
+    private readonly IOptions<AppSettings> _appSettings;
 
     public UserService(
         DestinationBucketDbContext dataContext,
