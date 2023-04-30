@@ -8,4 +8,5 @@ public interface IJwtUtilities
     public Guid? ValidateJwtToken(string token);
     public string GetFieldFromToken(string token, string field);
     public DateTime GetExpirationDate(string token);
+    public DateTime GetIssuedDate(string token);
 }

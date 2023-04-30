@@ -1,5 +1,8 @@
 using System.Net;
+using DestinationBucketListBackend.Model;
+using DestinationBucketListBackend.Settings;
 using DestinationBucketListBackend.Utilities.Interfaces;
+using Microsoft.Extensions.Options;
 
 namespace DestinationBucketListBackend.Middlewares
 {
@@ -20,7 +23,8 @@ namespace DestinationBucketListBackend.Middlewares
         public async Task InvokeAsync(
             HttpContext httpContext,
             IJwtUtilities jwtUtilities,
-            ICookieUtilities cookieUtilities)
+            ICookieUtilities cookieUtilities,
+            IOptions<AppSettings> appSettings)
         {
             char delimitator = '/';
             var path = httpContext.Request.Path.Value?.Split(delimitator)
@@ -45,7 +49,6 @@ namespace DestinationBucketListBackend.Middlewares
                 }
 
                 Guid? userId = jwtUtilities.ValidateJwtToken(accessToken);
-
                 Guid? isRefreshTokenValid = jwtUtilities.ValidateJwtToken(refreshToken);
 
                 if (isRefreshTokenValid is null)
@@ -55,9 +58,15 @@ namespace DestinationBucketListBackend.Middlewares
                     return;
                 }
                 
-                
-            }
+                var userIdStoredInToken = Guid.Parse(jwtUtilities.GetFieldFromToken(accessToken, "Id"));
+                var accessTokenIssuedDate = jwtUtilities.GetIssuedDate(accessToken);
             
+                if (userId is null)
+                {
+                    string newAccessToken = jwtUtilities.GenerateJwtToken(new User { Id = userIdStoredInToken }, appSettings.Value.AccessTokenTimeToLive);
+                    cookieUtilities.setCookiePrivate("accessToken", newAccessToken, httpContext, appSettings.Value.AccessTokenTimeToLive);
+                }
+            }
             await _next(httpContext);
         }
     }

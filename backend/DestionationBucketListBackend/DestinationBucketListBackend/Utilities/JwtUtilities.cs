@@ -3,19 +3,26 @@ using System.Security.Claims;
 using System.Text;
 using DestinationBucketListBackend.ExtensionMethods;
 using DestinationBucketListBackend.Model;
+using DestinationBucketListBackend.Settings;
 using DestinationBucketListBackend.Utilities.Interfaces;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DestinationBucketListBackend.Utilities;
 
 public class JwtUtilities : IJwtUtilities
 {
+    private IOptions<AppSettings> _appSettings;
 
-    private string _secretKey = "FNJKDSAFIUEWSAFIUYQWE4UI34";
+    public JwtUtilities(IOptions<AppSettings> appSettings)
+    {
+        _appSettings = appSettings;
+    }
+
     public string GenerateJwtToken(User user, int expiredTimeInMinutes)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_secretKey);
+        var key = Encoding.ASCII.GetBytes(_appSettings.Value.Secret);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[] { new Claim("Id", user.Id.ToString()) }),
@@ -36,7 +43,7 @@ public class JwtUtilities : IJwtUtilities
         }
 
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_secretKey);
+        var key = Encoding.ASCII.GetBytes(_appSettings.Value.Secret);
         try
         {
             tokenHandler.ValidateToken(token, new TokenValidationParameters
@@ -78,5 +85,12 @@ public class JwtUtilities : IJwtUtilities
         DateTime result = new DateTime().ConvertFromUnixTimeStamp(amount);
         return result;
         //return Utilities.ConvertFromUnixTimeStamp(Int32.Parse(GetFieldFromToken(token, "exp")));
+    }
+
+    public DateTime GetIssuedDate(string token)
+    {
+        int amount = Int32.Parse(GetFieldFromToken(token,"iat"));
+        DateTime result = new DateTime().ConvertFromUnixTimeStamp(amount);
+        return result;
     }
 }
