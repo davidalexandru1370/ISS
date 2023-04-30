@@ -34,3 +34,7 @@ export const register = async (user: User) => {
     throw new Error(authResult.error!);
   }
 };
+
+export const authorizeUser = (): boolean => {
+  return true;
+};
