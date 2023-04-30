@@ -24,9 +24,9 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
     (async () => {
       await authorized.then((value) => {
         setIsAuthorized(value);
+        fetched.current = true;
       });
     })();
-    fetched.current = true;
 
     return () => {
       abortController.abort();

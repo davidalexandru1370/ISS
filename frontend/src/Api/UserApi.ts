@@ -35,6 +35,16 @@ export const register = async (user: User) => {
   }
 };
 
-export const authorizeUser = (): boolean => {
-  return true;
+export const authorizeUser = async (): Promise<boolean> => {
+  let url = UserEndpoints.authorize;
+  let isAuthorized = await fetch(url, createHeader(Methods.GET)).then(
+    (response: Response) => {
+      if (response.status === 403) {
+        return false;
+      }
+      return true;
+    }
+  );
+
+  return isAuthorized;
 };

@@ -11,9 +11,11 @@ export enum Methods {
 interface UserEndpoint {
   login: string;
   register: string;
+  authorize: string;
 }
 
 export const UserEndpoints: UserEndpoint = {
   login: baseUrl + userController + "authentificate",
   register: baseUrl + userController + "register",
+  authorize: baseUrl + userController + "authorize",
 };

@@ -12,7 +12,7 @@ namespace DestinationBucketListBackend.Middlewares
 
         private readonly List<string> _middlewareFor = new()
         {
-            "mainpage"
+            "authorize"
         };
 
         public AuthorizeMiddleware(RequestDelegate next)
