@@ -67,6 +67,9 @@ const Login = () => {
                 };
                 try {
                   await login(user);
+                  navigate("/mainpage", {
+                    replace: true,
+                  });
                 } catch (error) {
                   toast((error as Error).message, {
                     type: "error",

@@ -83,6 +83,9 @@ export const Register = () => {
                 };
                 try {
                   await register(user);
+                  navigate("/mainpage", {
+                    replace: true,
+                  });
                 } catch (error) {
                   toast((error as Error).message, {
                     type: "error",
