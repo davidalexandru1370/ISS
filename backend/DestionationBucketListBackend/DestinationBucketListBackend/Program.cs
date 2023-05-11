@@ -1,6 +1,8 @@
 using System.Text;
 using DestinationBucketListBackend.DbContext;
 using DestinationBucketListBackend.Middlewares;
+using DestinationBucketListBackend.Repository;
+using DestinationBucketListBackend.Repository.Interfaces;
 using DestinationBucketListBackend.Services;
 using DestinationBucketListBackend.Services.Interfaces;
 using DestinationBucketListBackend.Settings;
@@ -19,6 +21,8 @@ builder.Services.AddDbContext<DestinationBucketDbContext>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtUtilities, JwtUtilities>();
 builder.Services.AddScoped<ICookieUtilities, CookieUtilities>();
+builder.Services.AddScoped<IDestinationRepository, DestinationRepository>();
+builder.Services.AddScoped<IDestinationService, DestinationService>();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 builder.Services.AddAuthentication(options =>
@@ -42,7 +46,8 @@ builder.Services.AddAuthentication(options =>
     });
 
 var app = builder.Build();
-app.UseCors(options => options.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+app.UseCors(
+    options => options.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
