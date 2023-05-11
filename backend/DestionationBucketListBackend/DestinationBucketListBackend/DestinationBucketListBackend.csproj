@@ -30,24 +30,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Remove="Exceptions\**" />
-      <Compile Remove="Repository\**" />
+      <Compile Include="Exceptions\DestinationBucketException.cs" />
+      <Compile Include="Exceptions\RepositoryException.cs" />
+      <Compile Include="Repository\DestinationRepository.cs" />
+      <Compile Include="Repository\Interfaces\IDestinationRepository.cs" />
 
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Remove="Exceptions\**" />
-      <EmbeddedResource Remove="Repository\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="Exceptions\**" />
-      <None Remove="Repository\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Content Remove="Exceptions\**" />
-      <Content Remove="Repository\**" />
     </ItemGroup>
 
     <ItemGroup>
