@@ -2,6 +2,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { ProtectedRouteProps } from "../../Model/ProtectedRouteProps";
 import { authorizeUser } from "../../Api/UserApi";
+import { NavigationBar } from "../../Components/NavigationBar/NavigationBar";
 
 export const ProtectedRoute: FC<ProtectedRouteProps> = ({
   page,
@@ -35,7 +36,11 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
 
   if (isAuthorized !== undefined) {
     if (isAuthorized === false) {
-      return <Navigate to={redirectPage} replace />;
+      return (
+        <>
+          <Navigate to={redirectPage} replace />;
+        </>
+      );
     }
     return page;
   }

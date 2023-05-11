@@ -56,7 +56,7 @@ builder.Services.AddAuthentication(options =>
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-    }).AddCookie(x => { x.Cookie.Name = "accessToken"; })
+    })
     .AddJwtBearer(options =>
     {
         options.SaveToken = true;
@@ -64,11 +64,10 @@ builder.Services.AddAuthentication(options =>
         {
             OnMessageReceived = context =>
             {
-                if (context.Request.Cookies.ContainsKey("accessToken"))
+                if (context.Request.Cookies.ContainsKey("refreshToken"))
                 {
-                    context.Token = context.Request.Cookies["accessToken"];
+                    context.Token = context.Request.Cookies["refreshToken"];
                 }
-
                 return Task.CompletedTask;
             }
         };
@@ -96,7 +95,7 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-//app.UseAuthorizeMiddleware();
+app.UseAuthorizeMiddleware();
 
 app.MapControllers();
 

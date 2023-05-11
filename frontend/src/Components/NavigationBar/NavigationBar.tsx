@@ -1,5 +1,10 @@
+import { Typography } from "@mui/material";
 import React from "react";
 
 export const NavigationBar = () => {
-  return <div></div>;
+  return (
+    <div>
+      <Typography>Main menu</Typography>
+    </div>
+  );
 };

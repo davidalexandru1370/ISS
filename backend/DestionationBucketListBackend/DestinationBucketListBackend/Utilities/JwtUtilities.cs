@@ -25,18 +25,24 @@ public class JwtUtilities : IJwtUtilities
         var key = Encoding.ASCII.GetBytes(_appSettings.Value.Secret);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(new[] { new Claim("Id", user.Id.ToString()) }),
+            Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim("Id", user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, user.Role.ToString())
+                }
+            ),
             Expires = DateTime.UtcNow.AddMinutes(expiredTimeInMinutes),
             Audience = "localhost:3000",
             Issuer = "localhost:5041",
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            SigningCredentials =
+                new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
 
         return tokenHandler.WriteToken(token);
     }
-    
+
     public Guid? ValidateJwtToken(string token)
     {
         if (token == null)
@@ -61,11 +67,9 @@ public class JwtUtilities : IJwtUtilities
             var userId = Guid.Parse(jwtToken.Claims.First(x => x.Type == "Id").Value);
 
             return userId;
-
         }
         catch (Exception)
         {
-
         }
 
         return null;
@@ -80,7 +84,7 @@ public class JwtUtilities : IJwtUtilities
 
         return tokens.Claims.First(x => x.Type == field).Value;
     }
-    
+
     public DateTime GetExpirationDate(string token)
     {
         int amount = Int32.Parse(GetFieldFromToken(token, "exp"));
@@ -91,7 +95,7 @@ public class JwtUtilities : IJwtUtilities
 
     public DateTime GetIssuedDate(string token)
     {
-        int amount = Int32.Parse(GetFieldFromToken(token,"iat"));
+        int amount = Int32.Parse(GetFieldFromToken(token, "iat"));
         DateTime result = new DateTime().ConvertFromUnixTimeStamp(amount);
         return result;
     }
