@@ -1,17 +1,7 @@
 import { addDestination } from "../../Api/DestinationApi";
 
 const MainPage = () => {
-  return (
-    <div>
-      <button
-        onClick={async () => {
-          await addDestination();
-        }}
-      >
-        add
-      </button>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default MainPage;

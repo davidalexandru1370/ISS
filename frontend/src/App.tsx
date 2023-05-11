@@ -6,6 +6,7 @@ import { Register } from "./Pages/Register/Register";
 import { ProtectedRoute } from "./Pages/ProtectedRoute/ProtectedRoute";
 import MainPage from "./Pages/MainPage/MainPage";
 import BaseRouter from "./Components/BaseRouter/BaseRouter";
+import { PublicDestinations } from "./Pages/PublicDestinations/PublicDestinations";
 
 function App() {
   return (
@@ -16,6 +17,15 @@ function App() {
         <Route
           path="/mainpage"
           element={<ProtectedRoute page={<MainPage />} redirectPage="/login" />}
+        />
+        <Route
+          path="/publicdestinations"
+          element={
+            <ProtectedRoute
+              page={<PublicDestinations />}
+              redirectPage="/login"
+            />
+          }
         />
       </Route>
     </Routes>
