@@ -10,6 +10,7 @@ namespace DestinationBucketListBackend.Controllers;
 
 [Authorize]
 [ApiController]
+[Route("api/[controller]")]
 public class DestinationController : ControllerBase
 {
     private readonly IDestinationService _destinationService;

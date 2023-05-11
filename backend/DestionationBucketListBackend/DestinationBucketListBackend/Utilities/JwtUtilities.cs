@@ -27,6 +27,8 @@ public class JwtUtilities : IJwtUtilities
         {
             Subject = new ClaimsIdentity(new[] { new Claim("Id", user.Id.ToString()) }),
             Expires = DateTime.UtcNow.AddMinutes(expiredTimeInMinutes),
+            Audience = "localhost:3000",
+            Issuer = "localhost:5041",
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
 

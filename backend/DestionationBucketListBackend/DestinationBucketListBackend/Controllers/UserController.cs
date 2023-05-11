@@ -4,7 +4,7 @@ using DestinationBucketListBackend.Services.Interfaces;
 using DestinationBucketListBackend.Utilities.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DestinationBucketListBackend.Controller;
+namespace DestinationBucketListBackend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
