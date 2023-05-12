@@ -40,3 +40,7 @@
   font-size: small;
   font-weight: 300;
 }
+
+.favoriteIconStyle:active {
+  transform: scale(1.4);
+}
