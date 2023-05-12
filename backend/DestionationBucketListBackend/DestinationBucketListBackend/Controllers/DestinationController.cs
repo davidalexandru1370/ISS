@@ -26,7 +26,7 @@ public class DestinationController : ControllerBase
 
     [HttpPost]
     [Route("add-destination")]
-    public async Task<ActionResult<Destination>> AddDestination([FromBody] Destination destination)
+    public async Task<ActionResult<Destination>> AddDestination([FromForm] Destination destination)
     {
         try
         {
