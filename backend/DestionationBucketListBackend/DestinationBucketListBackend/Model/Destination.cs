@@ -29,6 +29,8 @@ public class Destination
 
     [Required(ErrorMessage = "Price can not be empty or negative")]
     public double Price { get; set; }
-
+    
     public string? ImageUrl { get; set; }
+
+    [NotMapped] public IFormFile DestionationImage { get; set; } = null!;
 }
