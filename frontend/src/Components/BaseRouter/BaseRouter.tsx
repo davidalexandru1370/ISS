@@ -3,7 +3,7 @@ import { NavigationBar } from "../NavigationBar/NavigationBar";
 
 const BaseRouter = () => {
   return (
-    <div>
+    <div style={{ display: "flex" }}>
       <NavigationBar />
       <Outlet />
     </div>

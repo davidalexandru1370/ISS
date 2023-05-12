@@ -1,0 +1,42 @@
+.destinationImage {
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+}
+
+.titleAndDescriptionContainer {
+  position: relative;
+  height: 100%;
+}
+
+.container {
+  position: relative;
+  margin-top: 1rem;
+}
+
+.titleAndDescription {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: 0.5s ease-in-out;
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+}
+
+.titleAndDescriptionContainer:hover .destinationImage {
+  opacity: 0.4;
+}
+
+.titleAndDescriptionContainer:hover .titleAndDescription {
+  opacity: 1;
+}
+
+.destinationDescription {
+  font-size: small;
+  font-weight: 300;
+}

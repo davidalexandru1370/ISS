@@ -10,6 +10,7 @@ const menuItemTypographyStyle = {
   fontSize: "11px",
   margin: "5px 0 0 5px",
 };
+
 const menuItemBoxStyle = {
   paddingBlock: "0.5rem",
   minWidth: "fit-content",

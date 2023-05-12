@@ -9,6 +9,7 @@
   background-color: rgb(238, 238, 238);
   height: 100vh;
   max-width: 300px;
+  margin-right: 1rem;
 }
 
 .menuItems li {
