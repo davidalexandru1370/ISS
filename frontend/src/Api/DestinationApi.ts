@@ -1,13 +1,18 @@
-export const addDestination = async () => {
-  await fetch("http://localhost:5041/api/destination/add-destination", {
-    method: "POST",
-    mode: "cors",
-    headers: {
-      Accept: "application/json",
-      "Content-type": "application/json",
-      "Access-Control-Allow-Origin": "*",
+import { DestinationEndpoints, Methods } from "../Constants/ApiConstants";
+import { AddDestinationDto } from "../Model/AddDestinationDto";
+import { DestinationDto } from "../Model/DestinationDto";
+import { createHeader } from "../Utilities/Utilities";
 
-      credentials: "include",
-    },
-  });
+export const addDestination = async (destination: AddDestinationDto) => {
+  const url = DestinationEndpoints.addDestination;
+  const header = createHeader(Methods.POST, destination);
+  const data: DestinationDto = await fetch(url, header)
+    .then(async (response: Response) => {
+      return await response.json();
+    })
+    .then((destination: DestinationDto) => {
+      return destination;
+    });
+
+  return data;
 };

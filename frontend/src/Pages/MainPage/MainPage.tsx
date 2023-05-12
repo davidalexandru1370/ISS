@@ -1,4 +1,3 @@
-import { addDestination } from "../../Api/DestinationApi";
 import { DestinationCard } from "../../Components/DestinationCard/DestinationCard";
 
 const MainPage = () => {
