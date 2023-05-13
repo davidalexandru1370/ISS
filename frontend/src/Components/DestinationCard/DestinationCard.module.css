@@ -44,3 +44,10 @@
 .favoriteIconStyle:active {
   transform: scale(1.4);
 }
+
+.destinationActions {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1rem;
+}

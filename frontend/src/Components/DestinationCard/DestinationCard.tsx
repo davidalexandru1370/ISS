@@ -7,6 +7,8 @@ import { Box, Typography } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+
 interface IDestinationCard {
   destination: DestinationDto;
   onUpdateClick: () => void;
@@ -16,15 +18,20 @@ interface IDestinationCard {
 
 const iconStyle = {
   cursor: "pointer",
-  fontSize: "15px",
+  fontSize: "16px",
 };
 
 const favoriteIconClickStyle = {
   color: "red",
 };
 
+const moreVertIconStyle = {
+  fontSize: "18px",
+  color: "gray",
+};
+
 const destinationDetailsStyle = {
-  fontSize: "11px",
+  fontSize: "13px",
 };
 
 export const DestinationCard: FC<IDestinationCard> = ({
@@ -35,12 +42,12 @@ export const DestinationCard: FC<IDestinationCard> = ({
 }) => {
   const [favoriteIconStyle, setFavoriteIconStyle] = useState({
     position: "absolute",
-    zIndex: 10,
+    zIndex: 12,
     top: 0,
     right: 0,
     color: "gray",
     margin: "5px",
-    fontSize: "16px",
+    fontSize: "24px",
     cursor: "pointer",
     transition: "all 0.3s ease-in-out",
   });
@@ -58,6 +65,16 @@ export const DestinationCard: FC<IDestinationCard> = ({
           });
         }}
       />
+      <MoreVertIcon
+        sx={{
+          ...favoriteIconStyle,
+          left: 0,
+          color: "gray",
+          transition: "none",
+        }}
+        onClick={async () => {}}
+      />
+
       <div className={styles.titleAndDescriptionContainer}>
         <img
           src="https://a0.muscache.com/im/pictures/miso/Hosting-668146487515150072/original/8ff2a532-e0cd-41a2-9164-554c4d9eb28a.jpeg?im_w=720"
