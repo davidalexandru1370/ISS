@@ -1,5 +1,6 @@
 using System.Text;
 using DestinationBucketListBackend.DbContext;
+using DestinationBucketListBackend.Identity;
 using DestinationBucketListBackend.Middlewares;
 using DestinationBucketListBackend.Repository;
 using DestinationBucketListBackend.Repository.Interfaces;
@@ -9,6 +10,7 @@ using DestinationBucketListBackend.Settings;
 using DestinationBucketListBackend.Utilities;
 using DestinationBucketListBackend.Utilities.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -18,12 +20,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DestinationBucketDbContext>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtUtilities, JwtUtilities>();
 builder.Services.AddScoped<ICookieUtilities, CookieUtilities>();
 builder.Services.AddScoped<IDestinationRepository, DestinationRepository>();
 builder.Services.AddScoped<IDestinationService, DestinationService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IAuthorizationHandler, RolesInDbAuthorizationHandler>();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.AddSwaggerGen(options =>
 {

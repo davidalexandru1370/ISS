@@ -95,11 +95,8 @@ public class DestinationController : ControllerBase
         try
         {
             var userId = User.GetUserId();
-            if (destination.UserId != destination.UserId)
-            {
-                return Forbid();
-            }
-            
+            var userRole = User.GetUserRole();
+            await _destinationService.DeleteDestinationByIdAsync(userId, userRole, destination.Id);
             return Ok();
         }
         catch (RepositoryException repositoryException)

@@ -36,6 +36,7 @@ export const AreYouSureModal: FC<IAreYouSureModalProps> = ({
             sx={successButtonStyle}
             onClick={() => {
               onOkClick();
+              handleOnClose();
             }}
           >
             Yes
@@ -45,6 +46,7 @@ export const AreYouSureModal: FC<IAreYouSureModalProps> = ({
             sx={cancelButtonStyle}
             onClick={() => {
               onCancelClick();
+              handleOnClose();
             }}
           >
             Cancel

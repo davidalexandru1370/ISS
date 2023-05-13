@@ -29,11 +29,6 @@ public class DestinationService : IDestinationService
         return result;
     }
 
-    public async Task DeleteDestinationAsync(Guid destinationId)
-    {
-        await _destinationRepository.DeleteDestinationAsync(destinationId);
-    }
-
     public async Task<IEnumerable<Destination>> GetAllDestinationsByUserIdAsync(Guid userId)
     {
         var destinations = await _destinationRepository.GetAllDestinationsByUserIdAsync(userId);

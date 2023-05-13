@@ -38,6 +38,7 @@ public class RolesInDbAuthorizationHandler : AuthorizationHandler<RolesAuthoriza
             {
                 var userId = Guid.Parse(context.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
                 var user = await _userRepository.GetUserByIdAsync(userId);
+                
                 if (requirement.AllowedRoles.Any(x => x == Enum.GetName(typeof(RolesEnum), user.Role)))
                 {
                     _httpContextAccessor.HttpContext.User = context.User;

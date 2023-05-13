@@ -6,13 +6,20 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { getDestinationByUser } from "../../Api/DestinationApi";
+import {
+  deleteDestinationById,
+  getDestinationByUser,
+} from "../../Api/DestinationApi";
 import { DestinationModal } from "../../Components/DestinationModal/DestinationModal";
 import { DestinationDto } from "../../Model/DestinationDto";
 import styles from "./mainpage.module.css";
 import { DestinationCard } from "../../Components/DestinationCard/DestinationCard";
+import { AreYouSureModal } from "../../Components/AreYouSureModal/AreYouSureModal";
 const MainPage = () => {
   const [isDestinationModalOpen, setIsDestinationModalOpen] =
+    useState<boolean>(false);
+
+  const [isAreYouSureModalOpen, setIsAreYouSureModalOpen] =
     useState<boolean>(false);
 
   const [destinations, setDestinations] = useState<DestinationDto[]>();
@@ -45,14 +52,7 @@ const MainPage = () => {
         </Box>
       ) : (
         <>
-          {destinations.length === 0 ? (
-            <>
-              <Typography>
-                You have no created destinations. Start by creating pressing Add
-                destination button
-              </Typography>
-            </>
-          ) : (
+          {
             <>
               <DestinationModal
                 isOpen={isDestinationModalOpen}
@@ -72,6 +72,23 @@ const MainPage = () => {
                 onClose={() => {
                   setSelectedDestination(undefined);
                   setIsDestinationModalOpen(false);
+                }}
+              />
+              <AreYouSureModal
+                isOpen={isAreYouSureModalOpen}
+                onCancelClick={() => {
+                  setIsAreYouSureModalOpen(false);
+                }}
+                onClose={() => {
+                  setIsAreYouSureModalOpen(false);
+                }}
+                onOkClick={async () => {
+                  await deleteDestinationById(selectedDestination!);
+                  const updatedDestinations = destinations.filter(
+                    (dest) => dest.id !== selectedDestination!.id
+                  );
+                  setSelectedDestination(undefined);
+                  setDestinations(updatedDestinations);
                 }}
               />
               <Box
@@ -104,8 +121,11 @@ const MainPage = () => {
                   return (
                     <DestinationCard
                       destination={d}
-                      onDeleteClick={() => {}}
-                      onUpdateClick={() => {
+                      onDeleteClick={() => {
+                        setSelectedDestination(d);
+                        setIsAreYouSureModalOpen(true);
+                      }}
+                      onUpdateClick={async () => {
                         setSelectedDestination(d);
                         setIsDestinationModalOpen(true);
                       }}
@@ -115,7 +135,7 @@ const MainPage = () => {
                 })}
               </Paper>
             </>
-          )}
+          }
         </>
       )}
     </div>
