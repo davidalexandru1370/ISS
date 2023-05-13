@@ -30,7 +30,7 @@ public class DestinationController : ControllerBase
     {
         try
         {
-            var result = await _destinationService.AddDestinationAsync(destination.DestionationImage, new Destination()
+            var result = await _destinationService.AddDestinationAsync(destination.DestinationImage, new Destination()
             {
                 Description = destination.Description,
                 Location = destination.Location,

@@ -5,5 +5,5 @@ export interface AddDestinationDto {
   startDate: string;
   stopDate: string;
   price: number;
-  image: File;
+  destinationImage: File;
 }

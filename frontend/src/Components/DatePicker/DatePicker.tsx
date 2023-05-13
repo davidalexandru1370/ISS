@@ -38,8 +38,6 @@ const DatePicker: FC<IDatePicker> = ({
   );
 };
 
-const textFieldStyle = {
-  border: "2px solid white",
-};
+const textFieldStyle = {};
 
 export default DatePicker;

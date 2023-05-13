@@ -3,6 +3,7 @@ import React, { FC, useReducer, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import DatePicker from "../DatePicker/DatePicker";
 import { AddDestinationDto } from "../../Model/AddDestinationDto";
+import { addDestination } from "../../Api/DestinationApi";
 
 interface IDestinationModalProps {
   onSubmitClick: () => Promise<void>;
@@ -132,13 +133,19 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
               destinationDispatch({
                 type: DestinationDispatchType.ADD,
                 payload: {
-                  image: event.target.files[0],
+                  destinationImage: event.target.files[0],
                 },
               });
             }
           }}
         />
-        <Button variant="contained" onClick={async () => {}} sx={button}>
+        <Button
+          variant="contained"
+          onClick={async () => {
+            await addDestination(destinationState);
+          }}
+          sx={button}
+        >
           Add destination
         </Button>
       </Box>
@@ -178,6 +185,4 @@ const button = {
   },
 };
 
-const textFieldStyle = {
-  border: "2px solid white",
-};
+const textFieldStyle = {};
