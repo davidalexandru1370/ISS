@@ -4,6 +4,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import DatePicker from "../DatePicker/DatePicker";
 import { AddDestinationDto } from "../../Model/AddDestinationDto";
 import { addDestination } from "../../Api/DestinationApi";
+import { toast } from "react-toastify";
 
 interface IDestinationModalProps {
   onSubmitClick: () => Promise<void>;
@@ -41,6 +42,17 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
 
   const handleOnClose = () => {
     onClose();
+  };
+
+  const isDestinationValid = (): boolean => {
+    return (
+      destinationState.description === "" ||
+      destinationState.title === "" ||
+      destinationState.location === "" ||
+      destinationState.startDate === "" ||
+      destinationState.stopDate === "" ||
+      destinationState.destinationImage === undefined
+    );
   };
 
   return (
@@ -141,8 +153,18 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
         />
         <Button
           variant="contained"
+          disabled={isDestinationValid()}
           onClick={async () => {
-            await addDestination(destinationState);
+            try {
+              await addDestination(destinationState);
+              toast("Added succesfully", {
+                type: "success",
+              });
+            } catch (error) {
+              toast((error as Error).message, {
+                type: "error",
+              });
+            }
           }}
           sx={button}
         >

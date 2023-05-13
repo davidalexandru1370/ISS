@@ -12,7 +12,7 @@ export const addDestination = async (destination: AddDestinationDto) => {
   formData.append("Description", destination.description);
   formData.append("Price", destination.price.toString());
   formData.append("StartDate", destination.startDate);
-  formData.append("StartDate", destination.stopDate);
+  formData.append("StopDate", destination.stopDate);
 
   const header = createHeader(Methods.POST, formData, acceptMethods.FORMDATA);
   const data: DestinationDto = await fetch(url, header)

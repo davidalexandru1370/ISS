@@ -31,6 +31,9 @@ public class DestinationController : ControllerBase
     {
         try
         {
+            DateTime.TryParse(Request.Form["StartDate"].ToString(), out var startDate);
+            DateTime.TryParse(Request.Form["StopDate"].ToString(), out var stopDate);
+
             var result = await _destinationService.AddDestinationAsync(destination.DestinationImage, new Destination()
             {
                 Description = destination.Description,
@@ -38,8 +41,8 @@ public class DestinationController : ControllerBase
                 Price = destination.Price,
                 ImageUrl = destination.ImageUrl,
                 Title = destination.Title,
-                StartDate = destination.StartDate,
-                StopDate = destination.StopDate,
+                StartDate = DateOnly.FromDateTime(startDate),
+                StopDate = DateOnly.FromDateTime(stopDate),
                 UserId = User.GetUserId()
             });
 
