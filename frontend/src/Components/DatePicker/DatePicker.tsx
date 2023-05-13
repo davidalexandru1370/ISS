@@ -1,6 +1,5 @@
 import { SxProps } from "@mui/material";
 import {
-  DatePickerProps,
   DatePicker as Datepicker,
   LocalizationProvider,
 } from "@mui/x-date-pickers";
