@@ -18,4 +18,5 @@ public class DestinationBucketDbContext : Microsoft.EntityFrameworkCore.DbContex
 
     public virtual DbSet<User> Users { get; set; } = null!;
     public virtual DbSet<Destination> Destinations { get; set; } = null!;
+    public virtual DbSet<PublicDestinations> PublicDestinations { get; set; } = null!;
 }

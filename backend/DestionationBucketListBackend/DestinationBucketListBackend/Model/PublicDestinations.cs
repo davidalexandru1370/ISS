@@ -1,7 +1,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace DestinationBucketListBackend.Model;
 
+[Table("PublicDestinations")]
+[PrimaryKey(nameof(UserId), nameof(DestinationId))]
 public class PublicDestinations
 {
     public virtual Destination? Destination { get; set; }
