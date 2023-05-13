@@ -108,7 +108,7 @@ export const DestinationCard: FC<IDestinationCard> = ({
           sx={{
             ...favoriteIconStyle,
             left: 0,
-            color: "gray",
+            color: "white",
             transition: "none",
           }}
           onClick={async () => {
@@ -167,7 +167,7 @@ export const DestinationCard: FC<IDestinationCard> = ({
       </div>
       <div className={styles.titleAndDescriptionContainer}>
         <img
-          src="https://a0.muscache.com/im/pictures/miso/Hosting-668146487515150072/original/8ff2a532-e0cd-41a2-9164-554c4d9eb28a.jpeg?im_w=720"
+          src={`${destination.imageUrl}`}
           className={styles.destinationImage}
         />
         <div className={styles.titleAndDescription}>
