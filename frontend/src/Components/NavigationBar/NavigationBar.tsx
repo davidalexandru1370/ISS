@@ -7,7 +7,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import useCurrentPath from "../../Hooks/useCurrentPath";
 import { useNavigate } from "react-router-dom";
 const menuItemTypographyStyle = {
-  fontSize: "11px",
+  fontSize: "14px",
   margin: "5px 0 0 5px",
 };
 
@@ -32,7 +32,7 @@ export const NavigationBar = () => {
   return (
     <div className={styles.content}>
       <Box>
-        <Typography sx={{ fontSize: "9px", color: "gray" }}>
+        <Typography sx={{ fontSize: "11px", color: "blue" }}>
           MAIN MENU
         </Typography>
         <Box

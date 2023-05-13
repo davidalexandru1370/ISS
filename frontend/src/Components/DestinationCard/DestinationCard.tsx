@@ -141,10 +141,22 @@ export const DestinationCard: FC<IDestinationCard> = ({
                     id="destination-menu"
                     aria-labelledby="destination-button"
                   >
-                    <MenuItem onClick={handleClose} sx={{ minWidth: "100px" }}>
+                    <MenuItem
+                      onClick={(event) => {
+                        handleClose(event);
+                        onDeleteClick();
+                      }}
+                      sx={{ minWidth: "100px" }}
+                    >
                       Delete
                     </MenuItem>
-                    <MenuItem onClick={handleClose} sx={{ minWidth: "100px" }}>
+                    <MenuItem
+                      onClick={(event) => {
+                        handleClose(event);
+                        onUpdateClick();
+                      }}
+                      sx={{ minWidth: "100px" }}
+                    >
                       Update
                     </MenuItem>
                   </MenuList>
