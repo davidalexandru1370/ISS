@@ -1,9 +1,9 @@
 export interface AddDestinationDto {
-  Description: string;
-  Location: string;
-  Title: string;
-  StartDate: string;
-  StopDate: string;
-  Price: number;
-  DestinationImage: File;
+  description: string;
+  location: string;
+  title: string;
+  startDate: string;
+  stopDate: string;
+  price: number;
+  destinationImage: File;
 }

@@ -1,15 +1,20 @@
 import { Methods } from "../Constants/ApiConstants";
 
+export enum acceptMethods {
+  JSON = "application/json",
+  FORMDATA = "multipart/form-data",
+}
+
 export const createHeader = (
   method: Methods,
   entity?: any,
-  accept?: string
+  accept = acceptMethods.JSON
 ) => {
   let headerOptions: RequestInit = {
     method: `${method}`,
     mode: "cors",
     headers: {
-      //Accept: accept !== undefined ? accept : "application/json",
+      Accept: accept !== undefined ? accept : "application/json",
       //"Content-type": accept !== undefined ? accept : "application/json",
       "Access-Control-Allow-Origin": "*",
     },
@@ -17,7 +22,10 @@ export const createHeader = (
   };
 
   if (entity !== undefined) {
-    headerOptions = { ...headerOptions, body: entity };
+    headerOptions = {
+      ...headerOptions,
+      body: accept === acceptMethods.JSON ? JSON.stringify(entity) : entity,
+    };
   }
   return headerOptions;
 };

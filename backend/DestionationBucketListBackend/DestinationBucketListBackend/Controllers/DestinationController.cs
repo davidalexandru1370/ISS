@@ -54,13 +54,4 @@ public class DestinationController : ControllerBase
             return Unauthorized();
         }
     }
-
-
-    [HttpPost]
-    [Route("add-image")]
-    public async Task<IActionResult> AddDestination([FromForm] IFormFile formFile)
-
-    {
-        return Ok();
-    }
 }
