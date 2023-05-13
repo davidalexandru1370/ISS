@@ -58,7 +58,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
           onChange={(e) => {
             destinationDispatch({
               type: DestinationDispatchType.ADD,
-              payload: { title: e.target.value },
+              payload: { Title: e.target.value },
             });
           }}
         ></TextField>
@@ -68,7 +68,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
           onChange={(e) => {
             destinationDispatch({
               type: DestinationDispatchType.ADD,
-              payload: { location: e.target.value },
+              payload: { Location: e.target.value },
             });
           }}
         ></TextField>
@@ -78,7 +78,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
           onChange={(e) => {
             destinationDispatch({
               type: DestinationDispatchType.ADD,
-              payload: { description: e.target.value },
+              payload: { Description: e.target.value },
             });
           }}
         ></TextField>
@@ -91,7 +91,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
               destinationDispatch({
                 type: DestinationDispatchType.ADD,
                 payload: {
-                  startDate: date,
+                  StartDate: date,
                 },
               });
             } catch (error) {}
@@ -106,7 +106,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
               destinationDispatch({
                 type: DestinationDispatchType.ADD,
                 payload: {
-                  startDate: date,
+                  StopDate: date,
                 },
               });
             } catch (error) {}
@@ -120,7 +120,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
             destinationDispatch({
               type: DestinationDispatchType.ADD,
               payload: {
-                price: parseInt(e.target.value),
+                Price: parseInt(e.target.value),
               },
             });
           }}
@@ -133,7 +133,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
               destinationDispatch({
                 type: DestinationDispatchType.ADD,
                 payload: {
-                  destinationImage: event.target.files[0],
+                  DestinationImage: event.target.files[0],
                 },
               });
             }

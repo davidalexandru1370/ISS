@@ -26,6 +26,7 @@ public class DestinationController : ControllerBase
 
     [HttpPost]
     [Route("add-destination")]
+    [Consumes("multipart/form-data")]
     public async Task<ActionResult<Destination>> AddDestination([FromForm] Destination destination)
     {
         try
@@ -52,5 +53,14 @@ public class DestinationController : ControllerBase
         {
             return Unauthorized();
         }
+    }
+
+
+    [HttpPost]
+    [Route("add-image")]
+    public async Task<IActionResult> AddDestination([FromForm] IFormFile formFile)
+
+    {
+        return Ok();
     }
 }

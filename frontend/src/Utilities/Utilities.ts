@@ -1,19 +1,23 @@
 import { Methods } from "../Constants/ApiConstants";
 
-export const createHeader = (method: Methods, entity?: any) => {
+export const createHeader = (
+  method: Methods,
+  entity?: any,
+  accept?: string
+) => {
   let headerOptions: RequestInit = {
     method: `${method}`,
     mode: "cors",
     headers: {
-      Accept: "application/json",
-      "Content-type": "application/json",
+      //Accept: accept !== undefined ? accept : "application/json",
+      //"Content-type": accept !== undefined ? accept : "application/json",
       "Access-Control-Allow-Origin": "*",
     },
     credentials: "include",
   };
 
   if (entity !== undefined) {
-    headerOptions = { ...headerOptions, body: JSON.stringify(entity) };
+    headerOptions = { ...headerOptions, body: entity };
   }
   return headerOptions;
 };
