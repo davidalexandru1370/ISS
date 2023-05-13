@@ -23,7 +23,31 @@ public static class ExtensionMethods
             throw new DestinationBucketException("Invalid user");
         }
     }
-    
+
+    public static string GetUserEmail(this ClaimsPrincipal claimsPrincipal)
+    {
+        if (claimsPrincipal is null)
+        {
+            throw new DestinationBucketException("Invalid user");
+        }
+
+        try
+        {
+            var email = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
+
+            if (email is null)
+            {
+                throw new DestinationBucketException("Invalid email");
+            }
+
+            return email;
+        }
+        catch (Exception e)
+        {
+            throw new DestinationBucketException(e.Message);
+        }
+    }
+
     public static RolesEnum GetUserRole(this ClaimsPrincipal claimsPrincipal)
     {
         if (claimsPrincipal is null)
@@ -36,10 +60,9 @@ public static class ExtensionMethods
             var userRole = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
             return (RolesEnum)Enum.Parse(typeof(RolesEnum), userRole);
         }
-        catch (Exception exception)
+        catch (Exception)
         {
             throw new DestinationBucketException("Invalid user");
         }
     }
-
 }

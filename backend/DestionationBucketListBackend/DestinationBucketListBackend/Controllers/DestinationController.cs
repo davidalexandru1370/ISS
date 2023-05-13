@@ -1,11 +1,7 @@
-using System.Text;
 using DestinationBucketListBackend.Exceptions;
 using DestinationBucketListBackend.ExtensionMethods;
 using DestinationBucketListBackend.Model;
-using DestinationBucketListBackend.Model.DTO;
 using DestinationBucketListBackend.Services.Interfaces;
-using Firebase.Auth;
-using Firebase.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +13,6 @@ namespace DestinationBucketListBackend.Controllers;
 public class DestinationController : ControllerBase
 {
     private readonly IDestinationService _destinationService;
-
 
     public DestinationController(IDestinationService destinationService)
     {
@@ -88,6 +83,24 @@ public class DestinationController : ControllerBase
             return BadRequest(repositoryException.Message);
         }
         catch (DestinationBucketException destinationBucketException)
+        {
+            return Forbid();
+        }
+    }
+
+    [HttpDelete]
+    [Route("delete-destination")]
+    public async Task<IActionResult> DeleteDestination(Destination destination)
+    {
+        try
+        {
+            var email = User.GetUserEmail();
+        }
+        catch (RepositoryException repositoryException)
+        {
+            return BadRequest(repositoryException.Message);
+        }
+        catch (DestinationBucketException)
         {
             return Forbid();
         }

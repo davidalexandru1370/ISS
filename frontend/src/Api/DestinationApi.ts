@@ -58,3 +58,19 @@ export const getDestinationByUser = async () => {
 
   return data;
 };
+
+export const deleteDestinationById = async (destination: DestinationDto) => {
+  const url = DestinationEndpoints.deleteDestination;
+  const header = createHeader(Methods.DELETE, destination);
+  const data = await fetch(url, header)
+    .then(async (response: Response) => {
+      if (response.status >= 400) {
+        return await response.json();
+      }
+    })
+    .then((error) => {
+      return error;
+    });
+
+  return data;
+};

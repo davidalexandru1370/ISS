@@ -2,6 +2,7 @@ export const baseUrl = "http://localhost:5041/";
 export const userController = "api/user/";
 export const destinationController = "api/destination/";
 
+const destinationBaseUrl = baseUrl + destinationController;
 export enum Methods {
   POST = "POST",
   PUT = "PUT",
@@ -19,6 +20,7 @@ interface DestinationEndpoint {
   addDestination: string;
   updateDestination: string;
   getDestinationsByUser: string;
+  deleteDestination: string;
 }
 
 export const UserEndpoints: UserEndpoint = {
@@ -28,7 +30,8 @@ export const UserEndpoints: UserEndpoint = {
 };
 
 export const DestinationEndpoints: DestinationEndpoint = {
-  getDestinationsByUser: baseUrl + destinationController + "get-by-user",
-  addDestination: baseUrl + destinationController + "add-destination",
-  updateDestination: baseUrl + destinationController + "update-destination",
+  getDestinationsByUser: destinationBaseUrl + "get-by-user",
+  addDestination: destinationBaseUrl + "add-destination",
+  updateDestination: destinationBaseUrl + "update-destination",
+  deleteDestination: destinationBaseUrl + "delete-destination",
 };
