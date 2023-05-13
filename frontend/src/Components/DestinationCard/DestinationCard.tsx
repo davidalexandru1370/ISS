@@ -1,7 +1,6 @@
-import React, { FC, useState } from "react";
-import { DestinationDto } from "../../Model/DestinationDto";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import styles from "./DestinationCard.module.css";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import StarIcon from "@mui/icons-material/Star";
 import {
   Box,
@@ -13,10 +12,9 @@ import {
   Popper,
   Typography,
 } from "@mui/material";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import React, { FC, useState } from "react";
+import { DestinationDto } from "../../Model/DestinationDto";
+import styles from "./DestinationCard.module.css";
 
 interface IDestinationCard {
   destination: DestinationDto;
@@ -140,6 +138,7 @@ export const DestinationCard: FC<IDestinationCard> = ({
                     autoFocusItem={isDestinationActionsVisible}
                     id="destination-menu"
                     aria-labelledby="destination-button"
+                    onKeyDown={handleListKeyDown}
                   >
                     <MenuItem
                       onClick={(event) => {

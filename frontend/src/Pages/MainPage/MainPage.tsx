@@ -3,15 +3,23 @@ import { DestinationCard } from "../../Components/DestinationCard/DestinationCar
 import { useState } from "react";
 import { DestinationModal } from "../../Components/DestinationModal/DestinationModal";
 import styles from "./mainpage.module.css";
+import { AddDestinationDto } from "../../Model/AddDestinationDto";
+import { DestinationDto } from "../../Model/DestinationDto";
 const MainPage = () => {
   const [isDestinationModalOpen, setIsDestinationModalOpen] =
     useState<boolean>(false);
+
+  const [selectedDestination, setSelectedDestination] =
+    useState<DestinationDto>();
+
   return (
     <div className={styles.container}>
       <DestinationModal
         isOpen={isDestinationModalOpen}
+        destination={selectedDestination}
         onSubmitClick={async () => {}}
         onClose={() => {
+          setSelectedDestination(undefined);
           setIsDestinationModalOpen(false);
         }}
       />
@@ -42,22 +50,26 @@ const MainPage = () => {
         }}
       >
         {Array.from(Array(10)).map(() => {
+          const destination: DestinationDto = {
+            description: "Hai in vacante pe la saint tropez",
+            id: "",
+            title: "vacanta",
+            imageUrl: "",
+            location: "Nantes, Franta",
+            ownerEmail: "da",
+            price: 5000,
+            startDate: "2023-07-07",
+            stopDate: "2023-07-12",
+          };
           return (
             <DestinationCard
-              destination={{
-                description: "Hai in vacante pe la saint tropez",
-                id: "",
-                title: "vacanta",
-                imageUrl: "",
-                location: "Nantes, Franta",
-                ownerEmail: "da",
-                price: 5000,
-                startDate: "2023-07-07",
-                stopDate: "2023-07-12",
-              }}
+              destination={destination}
               onDeleteClick={() => {}}
               onFavoriteClick={() => {}}
-              onUpdateClick={() => {}}
+              onUpdateClick={() => {
+                setSelectedDestination(destination);
+                setIsDestinationModalOpen(true);
+              }}
             />
           );
         })}

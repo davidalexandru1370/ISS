@@ -1,15 +1,17 @@
 import { Box, Button, Modal, TextField } from "@mui/material";
-import React, { FC, useReducer, useState } from "react";
+import React, { FC, useEffect, useReducer, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import DatePicker from "../DatePicker/DatePicker";
 import { AddDestinationDto } from "../../Model/AddDestinationDto";
 import { addDestination } from "../../Api/DestinationApi";
 import { toast } from "react-toastify";
+import { DestinationDto } from "../../Model/DestinationDto";
 
 interface IDestinationModalProps {
   onSubmitClick: () => Promise<void>;
   onClose: () => void;
   isOpen: boolean;
+  destination?: DestinationDto;
 }
 
 enum DestinationDispatchType {
@@ -34,14 +36,41 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
   isOpen,
   onClose,
   onSubmitClick,
+  destination,
 }) => {
   const [destinationState, destinationDispatch] = useReducer(
     handleDestinationDispatch,
     {} as AddDestinationDto
   );
 
+  useEffect(() => {
+    destinationDispatch({
+      type: DestinationDispatchType.ADD,
+      payload: {
+        description: destination === undefined ? "" : destination.description,
+        title: destination === undefined ? "" : destination.title,
+        location: destination === undefined ? "" : destination.location,
+        startDate: destination === undefined ? "" : destination.startDate,
+        stopDate: destination === undefined ? "" : destination.stopDate,
+        price: destination === undefined ? 0 : destination.price,
+      },
+    });
+  }, [destination]);
+
   const handleOnClose = () => {
     onClose();
+  };
+
+  const validateDifferenceBetweenStartTimeAndEndTime = (): boolean => {
+    return destinationState.startDate <= destinationState.stopDate;
+  };
+
+  const checkIfPriceIsNumber = (price: string) => {
+    const numberPattern: RegExp = new RegExp(
+      "(^(([1-9][0-9]*)|0)([.][0-9]+)?)"
+    );
+
+    return numberPattern.test(price);
   };
 
   const isDestinationValid = (): boolean => {
@@ -51,7 +80,9 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
       destinationState.location === "" ||
       destinationState.startDate === "" ||
       destinationState.stopDate === "" ||
-      destinationState.destinationImage === undefined
+      (destination === undefined &&
+        destinationState.destinationImage === undefined) ||
+      checkIfPriceIsNumber(destinationState.price.toString()) === false
     );
   };
 
@@ -65,6 +96,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
           }}
         />
         <TextField
+          defaultValue={destination?.title}
           label="Title"
           sx={textFieldStyle}
           onChange={(e) => {
@@ -75,6 +107,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
           }}
         ></TextField>
         <TextField
+          defaultValue={destination?.location}
           label="Location"
           sx={textFieldStyle}
           onChange={(e) => {
@@ -85,6 +118,8 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
           }}
         ></TextField>
         <TextField
+          multiline
+          defaultValue={destination?.description}
           label="Description"
           sx={textFieldStyle}
           onChange={(e) => {
@@ -95,6 +130,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
           }}
         ></TextField>
         <DatePicker
+          defaultValue={new Date(destination?.startDate || "")}
           label="Start date"
           onChange={(e) => {
             try {
@@ -110,6 +146,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
           }}
         />
         <DatePicker
+          defaultValue={new Date(destination?.stopDate || "")}
           label="End date"
           onChange={(e) => {
             try {
@@ -127,6 +164,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
         <TextField
           label="Price"
           type="number"
+          defaultValue={destination?.price}
           sx={textFieldStyle}
           onChange={(e) => {
             destinationDispatch({
@@ -137,20 +175,22 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
             });
           }}
         ></TextField>
-        <input
-          type="file"
-          name="myImage"
-          onChange={(event) => {
-            if (event.target.files) {
-              destinationDispatch({
-                type: DestinationDispatchType.ADD,
-                payload: {
-                  destinationImage: event.target.files[0],
-                },
-              });
-            }
-          }}
-        />
+        {destination === undefined && (
+          <input
+            type="file"
+            name="myImage"
+            onChange={(event) => {
+              if (event.target.files) {
+                destinationDispatch({
+                  type: DestinationDispatchType.ADD,
+                  payload: {
+                    destinationImage: event.target.files[0],
+                  },
+                });
+              }
+            }}
+          />
+        )}
         <Button
           variant="contained"
           disabled={isDestinationValid()}
