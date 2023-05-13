@@ -8,4 +8,5 @@ public interface IDestinationService
     public Task DeleteDestinationAsync(Guid destinationId);
     public Task<IEnumerable<Destination>> GetAllDestinationsByUserIdAsync(Guid userId);
     public Task<Destination> GetDestinationByIdAsync(Guid destinationId);
+    public Task<Destination> UpdateDestinationAsync(Destination destination);
 }

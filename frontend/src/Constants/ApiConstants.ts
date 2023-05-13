@@ -17,6 +17,7 @@ interface UserEndpoint {
 
 interface DestinationEndpoint {
   addDestination: string;
+  updateDestination: string;
 }
 
 export const UserEndpoints: UserEndpoint = {
@@ -27,4 +28,5 @@ export const UserEndpoints: UserEndpoint = {
 
 export const DestinationEndpoints: DestinationEndpoint = {
   addDestination: baseUrl + destinationController + "add-destination",
+  updateDestination: baseUrl + destinationController + "update-destination",
 };

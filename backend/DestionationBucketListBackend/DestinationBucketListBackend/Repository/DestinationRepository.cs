@@ -52,4 +52,15 @@ public class DestinationRepository : IDestinationRepository
 
         return destination;
     }
+
+    public async Task<Destination> UpdateDestinationAsync(Destination destination)
+    {
+        var foundDestination = await GetDestinationByIdAsync(destination.Id);
+
+        _destinationBucketDbContext.Entry(foundDestination).CurrentValues.SetValues(destination);
+
+        await _destinationBucketDbContext.SaveChangesAsync();
+
+        return destination;
+    }
 }

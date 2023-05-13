@@ -25,3 +25,22 @@ export const addDestination = async (destination: AddDestinationDto) => {
 
   return data;
 };
+
+export const updateDestination = async (destination: DestinationDto) => {
+  const url = DestinationEndpoints.updateDestination;
+  let header = createHeader(Methods.PUT, destination);
+  const data: DestinationDto = await fetch(url, header)
+    .then(async (response: Response) => {
+      if (response.status >= 400) {
+      }
+      return await response.json();
+    })
+    .then((destination: DestinationDto | string) => {
+      if (typeof destination === "string") {
+        throw new Error(destination);
+      }
+      return destination;
+    });
+
+  return data;
+};

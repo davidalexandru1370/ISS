@@ -45,6 +45,12 @@ public class DestinationService : IDestinationService
         return destination;
     }
 
+    public async Task<Destination> UpdateDestinationAsync(Destination destination)
+    {
+        var result = await _destinationRepository.UpdateDestinationAsync(destination);
+        return result;
+    }
+
     private async Task<string> UploadImageToFirebase(IFormFile destinationImage)
     {
         var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));

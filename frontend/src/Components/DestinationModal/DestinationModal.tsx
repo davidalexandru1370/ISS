@@ -3,7 +3,7 @@ import React, { FC, useEffect, useReducer, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import DatePicker from "../DatePicker/DatePicker";
 import { AddDestinationDto } from "../../Model/AddDestinationDto";
-import { addDestination } from "../../Api/DestinationApi";
+import { addDestination, updateDestination } from "../../Api/DestinationApi";
 import { toast } from "react-toastify";
 import { DestinationDto } from "../../Model/DestinationDto";
 
@@ -195,20 +195,36 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
           variant="contained"
           disabled={isDestinationValid()}
           onClick={async () => {
-            try {
-              await addDestination(destinationState);
-              toast("Added succesfully", {
-                type: "success",
-              });
-            } catch (error) {
-              toast((error as Error).message, {
-                type: "error",
-              });
+            if (destination === undefined) {
+              try {
+                await addDestination(destinationState);
+                toast("Added succesfully", {
+                  type: "success",
+                });
+              } catch (error) {
+                toast((error as Error).message, {
+                  type: "error",
+                });
+              }
+            } else {
+              try {
+                await updateDestination({
+                  ...destination,
+                  ...destinationState,
+                });
+                toast("Updated succesfully", {
+                  type: "success",
+                });
+              } catch (error) {
+                toast((error as Error).message, {
+                  type: "error",
+                });
+              }
             }
           }}
           sx={button}
         >
-          Add destination
+          {destination === undefined ? "Add destination" : "Update destination"}
         </Button>
       </Box>
     </Modal>

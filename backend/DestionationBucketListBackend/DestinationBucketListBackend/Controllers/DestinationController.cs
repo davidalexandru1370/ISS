@@ -57,4 +57,19 @@ public class DestinationController : ControllerBase
             return Unauthorized();
         }
     }
+
+    [HttpPut]
+    [Route("update-destination")]
+    public async Task<ActionResult<Destination>> UpdateDestination([FromBody] Destination destination)
+    {
+        try
+        {
+            var result = await _destinationService.UpdateDestinationAsync(destination);
+            return Ok(result);
+        }
+        catch (RepositoryException repositoryException)
+        {
+            return BadRequest(repositoryException);
+        }
+    }
 }
