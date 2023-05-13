@@ -36,7 +36,7 @@ const MainPage = () => {
         className={styles.content}
         sx={{
           height: "100%",
-          maxHeight: "94vh",
+          maxHeight: "91vh",
           overflow: "auto",
           boxShadow: 0,
         }}

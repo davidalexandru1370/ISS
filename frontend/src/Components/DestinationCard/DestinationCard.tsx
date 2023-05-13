@@ -3,7 +3,16 @@ import { DestinationDto } from "../../Model/DestinationDto";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import styles from "./DestinationCard.module.css";
 import StarIcon from "@mui/icons-material/Star";
-import { Box, Typography } from "@mui/material";
+import {
+  Box,
+  ClickAwayListener,
+  Grow,
+  MenuItem,
+  MenuList,
+  Paper,
+  Popper,
+  Typography,
+} from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
@@ -52,6 +61,30 @@ export const DestinationCard: FC<IDestinationCard> = ({
     transition: "all 0.3s ease-in-out",
   });
 
+  const [isDestinationActionsVisible, setIsDestinationActionsVisible] =
+    useState<boolean>(false);
+  const anchorRef = React.useRef<SVGSVGElement>(null);
+
+  const handleClose = (event: Event | React.SyntheticEvent) => {
+    if (
+      anchorRef.current &&
+      anchorRef.current.contains(event.target as HTMLElement)
+    ) {
+      return;
+    }
+
+    setIsDestinationActionsVisible(false);
+  };
+
+  function handleListKeyDown(event: React.KeyboardEvent) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setIsDestinationActionsVisible(false);
+    } else if (event.key === "Escape") {
+      setIsDestinationActionsVisible(false);
+    }
+  }
+
   return (
     <div className={styles.container}>
       <FavoriteIcon
@@ -65,16 +98,62 @@ export const DestinationCard: FC<IDestinationCard> = ({
           });
         }}
       />
-      <MoreVertIcon
-        sx={{
-          ...favoriteIconStyle,
-          left: 0,
-          color: "gray",
-          transition: "none",
-        }}
-        onClick={async () => {}}
-      />
 
+      <div style={{ position: "absolute" }}>
+        <MoreVertIcon
+          id="destination-button"
+          ref={anchorRef}
+          aria-controls={
+            isDestinationActionsVisible ? "destination-menu" : undefined
+          }
+          aria-haspopup="true"
+          sx={{
+            ...favoriteIconStyle,
+            left: 0,
+            color: "gray",
+            transition: "none",
+          }}
+          onClick={async () => {
+            setIsDestinationActionsVisible(true);
+          }}
+        />
+        <Popper
+          sx={{ zIndex: 10 }}
+          open={isDestinationActionsVisible}
+          anchorEl={anchorRef.current}
+          role={undefined}
+          placement="bottom-start"
+          transition
+          disablePortal
+        >
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{
+                transformOrigin:
+                  placement === "bottom-start" ? "left top" : "left bottom",
+              }}
+            >
+              <Paper>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList
+                    autoFocusItem={isDestinationActionsVisible}
+                    id="destination-menu"
+                    aria-labelledby="destination-button"
+                  >
+                    <MenuItem onClick={handleClose} sx={{ minWidth: "100px" }}>
+                      Delete
+                    </MenuItem>
+                    <MenuItem onClick={handleClose} sx={{ minWidth: "100px" }}>
+                      Update
+                    </MenuItem>
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
+      </div>
       <div className={styles.titleAndDescriptionContainer}>
         <img
           src="https://a0.muscache.com/im/pictures/miso/Hosting-668146487515150072/original/8ff2a532-e0cd-41a2-9164-554c4d9eb28a.jpeg?im_w=720"
@@ -120,10 +199,6 @@ export const DestinationCard: FC<IDestinationCard> = ({
           <Typography sx={{ ...destinationDetailsStyle, fontWeight: 800 }}>
             {destination.price} lei
           </Typography>
-          <Box sx={{ display: "flex", gap: "20px" }}>
-            <DeleteForeverIcon sx={iconStyle} />
-            <EditIcon sx={iconStyle} />
-          </Box>
         </Box>
       </Box>
     </div>
