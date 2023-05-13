@@ -1,7 +1,8 @@
 import { Box, Button, Modal, TextField } from "@mui/material";
-import React, { FC, useState } from "react";
+import React, { FC, useReducer, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import DatePicker from "../DatePicker/DatePicker";
+import { AddDestinationDto } from "../../Model/AddDestinationDto";
 
 interface IDestinationModalProps {
   onSubmitClick: () => Promise<void>;
@@ -9,11 +10,34 @@ interface IDestinationModalProps {
   isOpen: boolean;
 }
 
+enum DestinationDispatchType {
+  ADD,
+}
+
+interface DestinationDispatchAction {
+  type: DestinationDispatchType;
+  payload: Partial<AddDestinationDto>;
+}
+const handleDestinationDispatch = (
+  state: AddDestinationDto,
+  action: DestinationDispatchAction
+) => {
+  switch (action.type) {
+    case DestinationDispatchType.ADD:
+      return { ...state, ...action.payload };
+  }
+};
+
 export const DestinationModal: FC<IDestinationModalProps> = ({
   isOpen,
   onClose,
   onSubmitClick,
 }) => {
+  const [destinationState, destinationDispatch] = useReducer(
+    handleDestinationDispatch,
+    {} as AddDestinationDto
+  );
+
   const handleOnClose = () => {
     onClose();
   };
@@ -30,32 +54,87 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
         <TextField
           label="Title"
           sx={textFieldStyle}
-          onChange={(e) => {}}
+          onChange={(e) => {
+            destinationDispatch({
+              type: DestinationDispatchType.ADD,
+              payload: { title: e.target.value },
+            });
+          }}
         ></TextField>
         <TextField
           label="Location"
           sx={textFieldStyle}
-          onChange={(e) => {}}
+          onChange={(e) => {
+            destinationDispatch({
+              type: DestinationDispatchType.ADD,
+              payload: { location: e.target.value },
+            });
+          }}
         ></TextField>
         <TextField
           label="Description"
           sx={textFieldStyle}
-          onChange={(e) => {}}
+          onChange={(e) => {
+            destinationDispatch({
+              type: DestinationDispatchType.ADD,
+              payload: { description: e.target.value },
+            });
+          }}
         ></TextField>
-        <DatePicker label="Start date" />
-        <DatePicker label="End date" />
+        <DatePicker
+          label="Start date"
+          onChange={(e) => {
+            try {
+              //@ts-ignore
+              const date: string = (e.$d as Date).toISOString().split("T")[0];
+              destinationDispatch({
+                type: DestinationDispatchType.ADD,
+                payload: {
+                  startDate: date,
+                },
+              });
+            } catch (error) {}
+          }}
+        />
+        <DatePicker
+          label="End date"
+          onChange={(e) => {
+            try {
+              //@ts-ignore
+              const date: string = (e.$d as Date).toISOString().split("T")[0];
+              destinationDispatch({
+                type: DestinationDispatchType.ADD,
+                payload: {
+                  startDate: date,
+                },
+              });
+            } catch (error) {}
+          }}
+        />
         <TextField
           label="Price"
           type="number"
           sx={textFieldStyle}
-          onChange={(e) => {}}
+          onChange={(e) => {
+            destinationDispatch({
+              type: DestinationDispatchType.ADD,
+              payload: {
+                price: parseInt(e.target.value),
+              },
+            });
+          }}
         ></TextField>
         <input
           type="file"
           name="myImage"
           onChange={(event) => {
             if (event.target.files) {
-              console.log(event.target.files[0]);
+              destinationDispatch({
+                type: DestinationDispatchType.ADD,
+                payload: {
+                  image: event.target.files[0],
+                },
+              });
             }
           }}
         />
