@@ -50,12 +50,18 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
           sx={textFieldStyle}
           onChange={(e) => {}}
         ></TextField>
-        <input type="image" />
-        <Button
-          variant="contained"
-          onClick={async () => {}}
-          sx={button}
-        ></Button>
+        <input
+          type="file"
+          name="myImage"
+          onChange={(event) => {
+            if (event.target.files) {
+              console.log(event.target.files[0]);
+            }
+          }}
+        />
+        <Button variant="contained" onClick={async () => {}} sx={button}>
+          Add destination
+        </Button>
       </Box>
     </Modal>
   );
