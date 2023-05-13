@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace DestinationBucketListBackend.Model;
 
@@ -7,8 +8,8 @@ namespace DestinationBucketListBackend.Model;
 [PrimaryKey(nameof(UserId), nameof(DestinationId))]
 public class PublicDestinations
 {
-    public virtual Destination? Destination { get; set; }
-    public virtual User? User { get; set; }
+    [JsonIgnore]public virtual Destination? Destination { get; set; }
+    [JsonIgnore]public virtual User? User { get; set; }
     [ForeignKey("User")] public Guid UserId { get; set; }
     [ForeignKey("Destination")] public Guid DestinationId { get; set; }
 }

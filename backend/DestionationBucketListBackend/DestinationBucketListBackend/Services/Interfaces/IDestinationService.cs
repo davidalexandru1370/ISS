@@ -10,4 +10,5 @@ public interface IDestinationService
     public Task<Destination> GetDestinationByIdAsync(Guid destinationId);
     public Task<Destination> UpdateDestinationAsync(Destination destination);
     public Task DeleteDestinationByIdAsync(Guid userRequestId, RolesEnum rolesEnum, Guid destinationId);
+    public Task MarkDestinationAsPublicAsync(Guid destinationId, Guid userId);
 }

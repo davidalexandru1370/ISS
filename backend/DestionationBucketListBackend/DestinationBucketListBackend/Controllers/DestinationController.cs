@@ -108,4 +108,24 @@ public class DestinationController : ControllerBase
             return Forbid();
         }
     }
+
+    [HttpPut]
+    [Route("add-destination-to-public")]
+    public async Task<IActionResult> AddDestinationToBePublic(Guid destinationId)
+    {
+        try
+        {
+            var userId = User.GetUserId();
+            await _destinationService.MarkDestinationAsPublicAsync(destinationId, userId);
+            return Ok();
+        }
+        catch (RepositoryException repositoryException)
+        {
+            return BadRequest(repositoryException.Message);
+        }
+        catch (DestinationBucketException)
+        {
+            return Forbid();
+        }
+    }
 }

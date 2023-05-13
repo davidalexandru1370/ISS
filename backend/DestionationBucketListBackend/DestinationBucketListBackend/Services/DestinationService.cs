@@ -10,7 +10,7 @@ namespace DestinationBucketListBackend.Services;
 
 public class DestinationService : IDestinationService
 {
-    private IDestinationRepository _destinationRepository;
+    private readonly IDestinationRepository _destinationRepository;
     private static readonly string ApiKey = "AIzaSyBG_DScFgkNUOooWMoGvv2D1C7V85gKg5A";
     private static readonly string Bucket = "destinationbucketimages.appspot.com";
     private static readonly string AuthEmail = "admin@gmail.com";
@@ -50,10 +50,30 @@ public class DestinationService : IDestinationService
     public async Task DeleteDestinationByIdAsync(Guid userRequestId, RolesEnum userRole, Guid destinationId)
     {
         var destination = await GetDestinationByIdAsync(destinationId);
-        
+
         if (userRole == RolesEnum.Admin || destination.UserId == userRequestId)
         {
             await _destinationRepository.DeleteDestinationAsync(destinationId);
+        }
+    }
+
+    public async Task MarkDestinationAsPublicAsync(Guid destinationId, Guid userId)
+    {
+        var destination = await GetDestinationByIdAsync(destinationId);
+
+        if (destination.UserId == userId)
+        {
+            destination.IsPublic = true;
+            await UpdateDestinationAsync(destination);
+        }
+        else
+        {
+            PublicDestinations publicDestination = new()
+            {
+                UserId = userId,
+                DestinationId = destinationId
+            };
+            await _destinationRepository.AddDestinationToPublicListAsync(publicDestination);
         }
     }
 

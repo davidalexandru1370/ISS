@@ -63,4 +63,17 @@ public class DestinationRepository : IDestinationRepository
 
         return destination;
     }
+
+    public async Task AddDestinationToPublicListAsync(PublicDestinations publicDestination)
+    {
+        try
+        {
+            await _destinationBucketDbContext.Set<PublicDestinations>().AddAsync(publicDestination);
+            await _destinationBucketDbContext.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            throw new RepositoryException("Invalid operation");
+        }
+    }
 }

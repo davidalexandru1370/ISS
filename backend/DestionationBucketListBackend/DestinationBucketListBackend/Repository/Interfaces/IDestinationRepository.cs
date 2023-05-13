@@ -9,4 +9,5 @@ public interface IDestinationRepository
     public Task<IEnumerable<Destination>> GetAllDestinationsByUserIdAsync(Guid userId);
     public Task<Destination> GetDestinationByIdAsync(Guid destinationId);
     public Task<Destination> UpdateDestinationAsync(Destination destination);
+    public Task AddDestinationToPublicListAsync(PublicDestinations publicDestination);
 }

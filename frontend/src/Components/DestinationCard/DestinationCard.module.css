@@ -18,8 +18,10 @@
 }
 
 .titleAndDescription {
+  z-index: 101;
   padding: 0.5rem;
   display: flex;
+  color: white;
   flex-direction: column;
   justify-content: center;
   transition: 0.5s ease-in-out;
@@ -35,6 +37,23 @@
 .titleAndDescriptionContainer:hover .titleAndDescription {
   opacity: 1;
 }
+
+/* .titleAndDescriptionContainer::before {
+  z-index: 100;
+  content: "";
+  display: block;
+  position: absolute;
+  height: 75%;
+  opacity: 0;
+  width: 100%;
+  bottom: 0;
+  transition: opacity 0.5s ease-in-out;
+  background: linear-gradient(to bottom, transparent 0%, black 100%);
+}
+
+.titleAndDescriptionContainer:hover::before {
+  opacity: 1;
+} */
 
 .destinationDescription {
   font-size: small;
