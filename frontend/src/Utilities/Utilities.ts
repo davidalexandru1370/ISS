@@ -15,7 +15,6 @@ export const createHeader = (
     mode: "cors",
     headers: {
       Accept: accept !== undefined ? accept : "application/json",
-      //"Content-type": accept !== undefined ? accept : "application/json",
       "Access-Control-Allow-Origin": "*",
     },
     credentials: "include",
@@ -26,6 +25,15 @@ export const createHeader = (
       ...headerOptions,
       body: accept === acceptMethods.JSON ? JSON.stringify(entity) : entity,
     };
+    if (accept === acceptMethods.JSON) {
+      headerOptions = {
+        ...headerOptions,
+        headers: {
+          ...headerOptions.headers,
+          "Content-type": "application/json",
+        },
+      };
+    }
   }
   return headerOptions;
 };

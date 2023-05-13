@@ -1,79 +1,123 @@
-import { Box, Button, List, Paper } from "@mui/material";
-import { DestinationCard } from "../../Components/DestinationCard/DestinationCard";
-import { useState } from "react";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Paper,
+  Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import { getDestinationByUser } from "../../Api/DestinationApi";
 import { DestinationModal } from "../../Components/DestinationModal/DestinationModal";
-import styles from "./mainpage.module.css";
-import { AddDestinationDto } from "../../Model/AddDestinationDto";
 import { DestinationDto } from "../../Model/DestinationDto";
+import styles from "./mainpage.module.css";
+import { DestinationCard } from "../../Components/DestinationCard/DestinationCard";
 const MainPage = () => {
   const [isDestinationModalOpen, setIsDestinationModalOpen] =
     useState<boolean>(false);
 
+  const [destinations, setDestinations] = useState<DestinationDto[]>();
+
   const [selectedDestination, setSelectedDestination] =
     useState<DestinationDto>();
 
+  useEffect(() => {
+    getDestinationByUser().then((x) => {
+      setDestinations(x);
+    });
+  }, []);
+
   return (
     <div className={styles.container}>
-      <DestinationModal
-        isOpen={isDestinationModalOpen}
-        destination={selectedDestination}
-        onSubmitClick={async () => {}}
-        onClose={() => {
-          setSelectedDestination(undefined);
-          setIsDestinationModalOpen(false);
-        }}
-      />
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "end",
-          width: "100%",
-          padding: "10px",
-        }}
-      >
-        <Button
-          variant="contained"
-          onClick={() => {
-            setIsDestinationModalOpen(!isDestinationModalOpen);
+      {destinations === undefined ? (
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            paddingTop: "2rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          Add destination
-        </Button>
-      </Box>
-      <Paper
-        className={styles.content}
-        sx={{
-          height: "100%",
-          maxHeight: "91vh",
-          overflow: "auto",
-          boxShadow: 0,
-        }}
-      >
-        {Array.from(Array(10)).map(() => {
-          const destination: DestinationDto = {
-            description: "Hai in vacante pe la saint tropez",
-            id: "",
-            title: "vacanta",
-            imageUrl: "",
-            location: "Nantes, Franta",
-            ownerEmail: "da",
-            price: 5000,
-            startDate: "2023-07-07",
-            stopDate: "2023-07-12",
-          };
-          return (
-            <DestinationCard
-              destination={destination}
-              onDeleteClick={() => {}}
-              onFavoriteClick={() => {}}
-              onUpdateClick={() => {
-                setSelectedDestination(destination);
-                setIsDestinationModalOpen(true);
-              }}
-            />
-          );
-        })}
-      </Paper>
+          <CircularProgress />
+          <Typography>Loading data...</Typography>
+        </Box>
+      ) : (
+        <>
+          {destinations.length === 0 ? (
+            <>
+              <Typography>
+                You have no created destinations. Start by creating pressing Add
+                destination button
+              </Typography>
+            </>
+          ) : (
+            <>
+              <DestinationModal
+                isOpen={isDestinationModalOpen}
+                destination={selectedDestination}
+                onSubmitClick={async (destination: DestinationDto) => {
+                  let updatedDestinations;
+                  if (selectedDestination !== undefined) {
+                    updatedDestinations = destinations.map((d) => {
+                      return d.id === destination.id ? destination : d;
+                    });
+                    setDestinations(updatedDestinations);
+                  } else {
+                    updatedDestinations = [...destinations, destination];
+                  }
+                  setDestinations(updatedDestinations);
+                }}
+                onClose={() => {
+                  setSelectedDestination(undefined);
+                  setIsDestinationModalOpen(false);
+                }}
+              />
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "end",
+                  width: "100%",
+                  padding: "10px",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    setIsDestinationModalOpen(!isDestinationModalOpen);
+                  }}
+                >
+                  Add destination
+                </Button>
+              </Box>
+              <Paper
+                className={styles.content}
+                sx={{
+                  height: "100%",
+                  maxHeight: "91vh",
+                  overflow: "auto",
+                  boxShadow: 0,
+                }}
+              >
+                {destinations.map((d) => {
+                  return (
+                    <DestinationCard
+                      destination={d}
+                      onDeleteClick={() => {}}
+                      onUpdateClick={() => {
+                        setSelectedDestination(d);
+                        setIsDestinationModalOpen(true);
+                      }}
+                      onFavoriteClick={() => {}}
+                    />
+                  );
+                })}
+              </Paper>
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 };

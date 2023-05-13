@@ -44,3 +44,17 @@ export const updateDestination = async (destination: DestinationDto) => {
 
   return data;
 };
+
+export const getDestinationByUser = async () => {
+  const url = DestinationEndpoints.getDestinationsByUser;
+  const header = createHeader(Methods.GET);
+  const data: DestinationDto[] = await fetch(url, header)
+    .then(async (response: Response) => {
+      return await response.json();
+    })
+    .then((destinations: DestinationDto[]) => {
+      return destinations;
+    });
+
+  return data;
+};

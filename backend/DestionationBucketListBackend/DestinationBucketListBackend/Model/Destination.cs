@@ -32,5 +32,5 @@ public class Destination
     
     public string? ImageUrl { get; set; }
 
-    [NotMapped] public IFormFile DestinationImage { get; set; } = null!;
+    [NotMapped] public IFormFile? DestinationImage { get; set; } = null!;
 }

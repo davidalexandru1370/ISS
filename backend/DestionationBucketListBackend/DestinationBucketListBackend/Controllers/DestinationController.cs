@@ -72,4 +72,24 @@ public class DestinationController : ControllerBase
             return BadRequest(repositoryException);
         }
     }
+
+    [HttpGet]
+    [Route("get-by-user")]
+    public async Task<ActionResult<Destination>> GetDestinationsByUserId()
+    {
+        try
+        {
+            var userId = User.GetUserId();
+            var result = await _destinationService.GetAllDestinationsByUserIdAsync(userId);
+            return Ok(result);
+        }
+        catch (RepositoryException repositoryException)
+        {
+            return BadRequest(repositoryException.Message);
+        }
+        catch (DestinationBucketException destinationBucketException)
+        {
+            return Forbid();
+        }
+    }
 }

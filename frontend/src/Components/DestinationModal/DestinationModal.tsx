@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { DestinationDto } from "../../Model/DestinationDto";
 
 interface IDestinationModalProps {
-  onSubmitClick: () => Promise<void>;
+  onSubmitClick: (destination: DestinationDto) => Promise<void>;
   onClose: () => void;
   isOpen: boolean;
   destination?: DestinationDto;
@@ -197,10 +197,12 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
           onClick={async () => {
             if (destination === undefined) {
               try {
-                await addDestination(destinationState);
+                const result = await addDestination(destinationState);
                 toast("Added succesfully", {
                   type: "success",
                 });
+                onSubmitClick(result);
+                handleOnClose();
               } catch (error) {
                 toast((error as Error).message, {
                   type: "error",
@@ -208,13 +210,17 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
               }
             } else {
               try {
-                await updateDestination({
+                const { destinationImage, ...updateDestinationState } =
+                  destinationState;
+                const updated = await updateDestination({
                   ...destination,
-                  ...destinationState,
-                });
+                  ...updateDestinationState,
+                } as DestinationDto);
                 toast("Updated succesfully", {
                   type: "success",
                 });
+                onSubmitClick(updated);
+                handleOnClose();
               } catch (error) {
                 toast((error as Error).message, {
                   type: "error",
