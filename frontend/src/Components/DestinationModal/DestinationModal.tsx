@@ -6,6 +6,7 @@ import { AddDestinationDto } from "../../Model/AddDestinationDto";
 import { addDestination, updateDestination } from "../../Api/DestinationApi";
 import { toast } from "react-toastify";
 import { DestinationDto } from "../../Model/DestinationDto";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 interface IDestinationModalProps {
   onSubmitClick: (destination: DestinationDto) => Promise<void>;
@@ -42,7 +43,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
     handleDestinationDispatch,
     {} as AddDestinationDto
   );
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
     destinationDispatch({
       type: DestinationDispatchType.ADD,
@@ -57,7 +58,12 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
     });
   }, [destination]);
 
+  useEffect(() => {
+    setIsLoading(false);
+  }, [isOpen]);
+
   const handleOnClose = () => {
+    setIsLoading(false);
     onClose();
   };
 
@@ -191,10 +197,12 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
             }}
           />
         )}
-        <Button
+        <LoadingButton
+          loading={isLoading}
           variant="contained"
           disabled={isDestinationValid()}
           onClick={async () => {
+            setIsLoading(true);
             if (destination === undefined) {
               try {
                 const result = await addDestination(destinationState);
@@ -222,6 +230,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
                 onSubmitClick(updated);
                 handleOnClose();
               } catch (error) {
+                setIsLoading(false);
                 toast((error as Error).message, {
                   type: "error",
                 });
@@ -231,7 +240,7 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
           sx={button}
         >
           {destination === undefined ? "Add destination" : "Update destination"}
-        </Button>
+        </LoadingButton>
       </Box>
     </Modal>
   );
