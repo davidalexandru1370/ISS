@@ -23,6 +23,7 @@ builder.Services.AddScoped<IJwtUtilities, JwtUtilities>();
 builder.Services.AddScoped<ICookieUtilities, CookieUtilities>();
 builder.Services.AddScoped<IDestinationRepository, DestinationRepository>();
 builder.Services.AddScoped<IDestinationService, DestinationService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.AddSwaggerGen(options =>
 {
@@ -68,6 +69,7 @@ builder.Services.AddAuthentication(options =>
                 {
                     context.Token = context.Request.Cookies["refreshToken"];
                 }
+
                 return Task.CompletedTask;
             }
         };

@@ -1,3 +1,4 @@
+using DestinationBucketListBackend.Enums;
 using DestinationBucketListBackend.Exceptions;
 using DestinationBucketListBackend.Model;
 using DestinationBucketListBackend.Repository.Interfaces;
@@ -49,6 +50,16 @@ public class DestinationService : IDestinationService
     {
         var result = await _destinationRepository.UpdateDestinationAsync(destination);
         return result;
+    }
+
+    public async Task DeleteDestinationByIdAsync(Guid userRequestId, RolesEnum userRole, Guid destinationId)
+    {
+        var destination = await GetDestinationByIdAsync(destinationId);
+        
+        if (userRole == RolesEnum.Admin || destination.UserId == userRequestId)
+        {
+            await _destinationRepository.DeleteDestinationAsync(destinationId);
+        }
     }
 
     private async Task<string> UploadImageToFirebase(IFormFile destinationImage)

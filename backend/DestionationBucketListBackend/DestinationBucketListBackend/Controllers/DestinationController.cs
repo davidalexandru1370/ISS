@@ -82,7 +82,7 @@ public class DestinationController : ControllerBase
         {
             return BadRequest(repositoryException.Message);
         }
-        catch (DestinationBucketException destinationBucketException)
+        catch (DestinationBucketException)
         {
             return Forbid();
         }
@@ -94,7 +94,13 @@ public class DestinationController : ControllerBase
     {
         try
         {
-            var email = User.GetUserEmail();
+            var userId = User.GetUserId();
+            if (destination.UserId != destination.UserId)
+            {
+                return Forbid();
+            }
+            
+            return Ok();
         }
         catch (RepositoryException repositoryException)
         {
