@@ -66,4 +66,28 @@ public static class ExtensionMethods
             throw new DestinationBucketException("Invalid user");
         }
     }
+
+    public static string GetUserName(this ClaimsPrincipal claimsPrincipal)
+    {
+        if (claimsPrincipal is null)
+        {
+            throw new DestinationBucketException("Invalid user");
+        }
+
+        try
+        {
+            var email = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name).Value;
+
+            if (email is null)
+            {
+                throw new DestinationBucketException("Invalid email");
+            }
+
+            return email;
+        }
+        catch (Exception e)
+        {
+            throw new DestinationBucketException(e.Message);
+        }
+    }
 }

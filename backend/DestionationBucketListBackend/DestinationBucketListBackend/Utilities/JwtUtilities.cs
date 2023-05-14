@@ -29,7 +29,8 @@ public class JwtUtilities : IJwtUtilities
                 {
                     new Claim("Id", user.Id.ToString()),
                     new Claim(ClaimTypes.Role, user.Role.ToString()),
-                    new Claim(ClaimTypes.Email, user.Email)
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Name,user.Name)
                 }
             ),
             Expires = DateTime.UtcNow.AddMinutes(expiredTimeInMinutes),

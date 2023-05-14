@@ -1,6 +1,7 @@
 import { Methods, UserEndpoints } from "../Constants/ApiConstants";
 import { AuthResult } from "../Model/AuthResult";
 import { User } from "../Model/User";
+import { UserDto } from "../Model/UserDto";
 import { createHeader } from "../Utilities/Utilities";
 
 export const login = async (user: User) => {
@@ -35,16 +36,23 @@ export const register = async (user: User) => {
   }
 };
 
-export const authorizeUser = async (): Promise<boolean> => {
+export const authorizeUser = async (): Promise<UserDto | undefined> => {
   let url = UserEndpoints.authorize;
-  let isAuthorized = await fetch(url, createHeader(Methods.GET)).then(
-    (response: Response) => {
+  const header = createHeader(Methods.GET);
+  let isAuthorized = await fetch(url, header)
+    .then(async (response: Response) => {
       if (response.status === 403) {
         return false;
+      } else {
+        return await response.json();
       }
-      return true;
-    }
-  );
+    })
+    .then((userDto: UserDto) => {
+      if (typeof userDto === "undefined") {
+        return undefined;
+      }
+      return userDto;
+    });
 
   return isAuthorized;
 };

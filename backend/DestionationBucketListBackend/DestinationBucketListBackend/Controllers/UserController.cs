@@ -1,7 +1,10 @@
+using DestinationBucketListBackend.Exceptions;
+using DestinationBucketListBackend.ExtensionMethods;
 using DestinationBucketListBackend.Model;
 using DestinationBucketListBackend.Model.DTO;
 using DestinationBucketListBackend.Services.Interfaces;
 using DestinationBucketListBackend.Utilities.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DestinationBucketListBackend.Controllers;
@@ -20,7 +23,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("authentificate")]
-    public async Task<ActionResult> Authentificate([FromBody] UserDto user)
+    public async Task<ActionResult> Authentificate([FromBody] RegisterCredentials user)
     {
         if (user is null)
         {
@@ -45,14 +48,28 @@ public class UserController : ControllerBase
         return Ok(response);
     }
 
+    [Authorize]
     [HttpGet("authorize")]
-    public IActionResult Authorize()
+    public ActionResult<UserDto> Authorize()
     {
-        return Ok();
+        try
+        {
+            return Ok(new UserDto()
+            {
+                Email = User.GetUserEmail(),
+                Username = User.GetUserName(),
+                Role = User.GetUserRole()
+            });
+        }
+        catch (DestinationBucketException)
+        {
+            return Forbid();
+        }
+        
     }
 
     [HttpPost("register")]
-    public async Task<ActionResult> Register([FromBody] UserDto user)
+    public async Task<ActionResult> Register([FromBody] RegisterCredentials user)
     {
         var response = await _userService.Register(new User()
         {
