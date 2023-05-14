@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "./PublicDestinations.module.css";
 import { DestinationDto } from "../../Model/DestinationDto";
 import { Box, CircularProgress, Paper, Typography } from "@mui/material";
-import { getPublicDestinations } from "../../Api/DestinationApi";
+import { addToFavorite, getPublicDestinations } from "../../Api/DestinationApi";
 import { DestinationCard } from "../../Components/DestinationCard/DestinationCard";
 import { AuthentificationContext } from "../../Context/AuthentificationContext";
+import { toast } from "react-toastify";
 export const PublicDestinations = () => {
   const [destinations, setDestinations] = useState<DestinationDto[]>();
   const { email } = useContext(AuthentificationContext);
@@ -58,6 +59,23 @@ export const PublicDestinations = () => {
                       destination={d}
                       onFavoriteClick={async () => {
                         if (d.ownerEmail !== email) {
+                          try {
+                            await addToFavorite(d.id);
+                            const updatedList = destinations.map((dest) => {
+                              return dest.id === d.id
+                                ? ({
+                                    ...dest,
+                                    isPublic: true,
+                                    numberOfTimesFavorated: 1,
+                                  } as DestinationDto)
+                                : dest;
+                            });
+                            setDestinations(updatedList);
+                          } catch (error) {
+                            toast((error as Error).message, {
+                              type: "error",
+                            });
+                          }
                         }
                       }}
                     ></DestinationCard>

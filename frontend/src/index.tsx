@@ -6,6 +6,7 @@ import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { ToastContainer } from "react-toastify";
+import { AuthentificationContextProvider } from "./Context/AuthentificationContext";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -16,7 +17,9 @@ root.render(
   <BrowserRouter>
     <React.StrictMode>
       <ToastContainer />
-      <App />
+      <AuthentificationContextProvider>
+        <App />
+      </AuthentificationContextProvider>
     </React.StrictMode>
   </BrowserRouter>
 );

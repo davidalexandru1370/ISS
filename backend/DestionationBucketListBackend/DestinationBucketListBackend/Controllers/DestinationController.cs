@@ -179,6 +179,7 @@ public class DestinationController : ControllerBase
         {
             var userId = User.GetUserId();
             await _destinationService.AddDestinationToFavoriteAsync(destinationId, userId);
+            return Ok();
         }
         catch (RepositoryException repositoryException)
         {

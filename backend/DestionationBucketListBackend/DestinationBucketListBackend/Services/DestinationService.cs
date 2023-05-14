@@ -61,13 +61,25 @@ public class DestinationService : IDestinationService
     public async Task MarkDestinationAsPublicAsync(Guid destinationId, Guid userId)
     {
         var destination = await GetDestinationByIdAsync(destinationId);
-        destination.IsPublic = true;
         PublicDestinations publicDestination = new()
         {
             UserId = userId,
             DestinationId = destinationId
         };
-        await _destinationRepository.UpdateDestinationAsync(destination);
+
+        if (destination.IsPublic == false)
+        {
+            if (destination.UserId != userId)
+            {
+                throw new DestinationBucketException("Forbidden");
+            }
+        }
+        else
+        {
+            destination.IsPublic = true;
+            await _destinationRepository.UpdateDestinationAsync(destination);
+        }
+
         await _destinationRepository.AddDestinationToPublicListAsync(publicDestination);
     }
 

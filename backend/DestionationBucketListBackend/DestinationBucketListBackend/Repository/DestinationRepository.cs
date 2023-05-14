@@ -36,7 +36,7 @@ public class DestinationRepository : IDestinationRepository
     {
         var publicDestinations =
             (from E in _destinationBucketDbContext.Set<Destination>()
-                    .Where(d => d.UserId == userId)
+                where E.UserId == userId && E.IsPublic == true
                 join C in _destinationBucketDbContext.Set<PublicDestinations>() on E.Id equals C.DestinationId
                 group C by E.Id
                 into res
@@ -72,6 +72,7 @@ public class DestinationRepository : IDestinationRepository
                 numberOfTimesFavorated = 0,
                 Id = dest.Id
             }) as IEnumerable<DestinationDto>;
+
 
         IEnumerable<DestinationDto> destinations = privateDestinations.Union(publicDestinations);
         return destinations;
@@ -135,7 +136,7 @@ public class DestinationRepository : IDestinationRepository
                     StartDate = res.FirstOrDefault().Destination.StartDate,
                     StopDate = res.FirstOrDefault().Destination.StopDate,
                     numberOfTimesFavorated = res.Count(),
-                    IsPublic = res.FirstOrDefault().UserId == userId
+                    IsPublic = true
                 }
             ) as IEnumerable<DestinationDto>;
 

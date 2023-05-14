@@ -31,9 +31,9 @@ export const AuthentificationContextProvider: FC<{ children: any }> = ({
         email: email,
         username: username,
         role: role,
-        setEmail: setEmail,
-        setRole: setRole,
-        setUsername: setUsername,
+        setEmail: (e) => setEmail(e),
+        setRole: (r) => setRole(r),
+        setUsername: (u) => setUsername(u),
       }}
     >
       {children}
