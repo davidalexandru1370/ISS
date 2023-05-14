@@ -34,7 +34,7 @@ public class DestinationRepository : IDestinationRepository
 
     public async Task<IEnumerable<DestinationDto>> GetAllDestinationsByUserId(Guid userId)
     {
-        var destinations =
+        var publicDestinations =
             (from E in _destinationBucketDbContext.Set<Destination>()
                     .Where(d => d.UserId == userId)
                 join C in _destinationBucketDbContext.Set<PublicDestinations>() on E.Id equals C.DestinationId
@@ -55,6 +55,24 @@ public class DestinationRepository : IDestinationRepository
                     IsPublic = res.FirstOrDefault().UserId == userId
                 }
             ) as IEnumerable<DestinationDto>;
+
+        var privateDestinations = _destinationBucketDbContext.Set<Destination>()
+            .Where(d => d.UserId == userId && d.IsPublic == false).Select(d => new DestinationDto()
+            {
+                IsPublic = false,
+                Description = d.Description,
+                Location = d.Location,
+                Price = d.Price,
+                Title = d.Title,
+                ImageUrl = d.ImageUrl,
+                OwnerEmail = d.User!.Email,
+                StartDate = d.StartDate,
+                StopDate = d.StopDate,
+                numberOfTimesFavorated = 0,
+                Id = d.Id
+            });
+
+        var destinations = publicDestinations.Concat(privateDestinations);
 
         return destinations;
     }

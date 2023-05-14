@@ -36,5 +36,4 @@ public class Destination
     public string? ImageUrl { get; set; }
     [NotMapped] public IFormFile? DestinationImage { get; set; } = null!;
 
-    public ICollection<PublicDestinations> PublicDestinations { get; set; } = null!;
 }
