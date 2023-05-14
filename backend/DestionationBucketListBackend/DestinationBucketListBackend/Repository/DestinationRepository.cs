@@ -49,7 +49,7 @@ public class DestinationRepository : IDestinationRepository
                     Price = res.FirstOrDefault().Destination.Price,
                     Title = res.FirstOrDefault().Destination.Title,
                     ImageUrl = res.FirstOrDefault().Destination.ImageUrl,
-                    OwnerEmail = res.FirstOrDefault().User.Email,
+                    OwnerEmail = res.FirstOrDefault().Destination.User.Email,
                     StartDate = res.FirstOrDefault().Destination.StartDate,
                     StopDate = res.FirstOrDefault().Destination.StopDate,
                     numberOfTimesFavorated = res.Count(),
