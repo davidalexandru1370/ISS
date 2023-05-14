@@ -88,3 +88,31 @@ export const addToFavorite = async (destinationId: string) => {
       throw new Error(error);
     });
 };
+
+export const removeFromFavorite = async (destinationId: string) => {
+  const url = DestinationEndpoints.removeFromFavorite(destinationId);
+  const header = createHeader(Methods.DELETE);
+  await fetch(url, header)
+    .then(async (response: Response) => {
+      if (response.status >= 400) {
+        return await response.json();
+      }
+    })
+    .then((error) => {
+      throw new Error(error);
+    });
+};
+
+export const getPublicDestinations = async () => {
+  const url = DestinationEndpoints.getPublicDestinations;
+  const header = createHeader(Methods.GET);
+  const data: DestinationDto[] = await fetch(url, header)
+    .then(async (response: Response) => {
+      return await response.json();
+    })
+    .then((destinations: DestinationDto[]) => {
+      return destinations;
+    });
+
+  return data;
+};

@@ -62,6 +62,7 @@ export const PrivateDestinationCard: FC<IPrivateDestinationCard> = ({
             }
             aria-haspopup="true"
             sx={{
+              cursor: "pointer",
               left: 0,
               color: "white",
               transition: "none",

@@ -1,5 +1,56 @@
-import React from "react";
-
+import React, { useState } from "react";
+import styles from "./PublicDestinations.module.css";
+import { DestinationDto } from "../../Model/DestinationDto";
+import { Box, CircularProgress, Paper, Typography } from "@mui/material";
 export const PublicDestinations = () => {
-  return <div>PublicDestinations</div>;
+  const [destinations, setDestinations] = useState<DestinationDto[]>();
+
+  return (
+    <div className={styles.container}>
+      {destinations === undefined ? (
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            paddingTop: "2rem",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+          <Typography>Loading data...</Typography>
+        </Box>
+      ) : (
+        <>
+          {
+            <Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "end",
+                  width: "100%",
+                  padding: "10px",
+                }}
+              ></Box>
+              <Paper
+                className={styles.content}
+                sx={{
+                  height: "100%",
+                  maxHeight: "91vh",
+                  overflow: "auto",
+                  boxShadow: 0,
+                }}
+              >
+                {destinations.map((d) => {
+                  return <></>;
+                })}
+              </Paper>
+            </Box>
+          }
+        </>
+      )}
+    </div>
+  );
 };

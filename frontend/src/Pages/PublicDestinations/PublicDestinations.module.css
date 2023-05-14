@@ -1,0 +1,15 @@
+.container {
+  width: 100%;
+}
+
+.content {
+  overflow: auto;
+  width: 100%;
+  --auto-grid-min-size: 16rem;
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(var(--auto-grid-min-size), 1fr)
+  );
+  column-gap: 50px;
+}

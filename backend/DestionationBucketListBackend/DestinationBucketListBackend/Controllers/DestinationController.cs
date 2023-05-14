@@ -112,7 +112,7 @@ public class DestinationController : ControllerBase
 
     [HttpPost]
     [Route("add-destination-to-public/{destinationId:guid}")]
-    public async Task<IActionResult> AddDestinationToBePublic([FromRoute]Guid destinationId)
+    public async Task<IActionResult> AddDestinationToBePublic([FromRoute] Guid destinationId)
     {
         try
         {
@@ -143,6 +143,30 @@ public class DestinationController : ControllerBase
         catch (RepositoryException)
         {
             return BadRequest();
+        }
+        catch (DestinationBucketException)
+        {
+            return Forbid();
+        }
+    }
+
+    [HttpDelete]
+    [Route("remove-from-favorite/{destinationId:guid}")]
+    public async Task<IActionResult> RemoveFromFavorite([FromRoute] Guid destinationId)
+    {
+        try
+        {
+            var userId = User.GetUserId();
+            await _destinationService.RemoveFromFavoriteAsync(destinationId, userId);
+            return Ok();
+        }
+        catch (RepositoryException repositoryException)
+        {
+            return BadRequest(repositoryException.Message);
+        }
+        catch (DestinationBucketException)
+        {
+            return Forbid();
         }
     }
 }

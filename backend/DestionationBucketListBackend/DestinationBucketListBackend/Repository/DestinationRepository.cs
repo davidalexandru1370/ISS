@@ -34,12 +34,6 @@ public class DestinationRepository : IDestinationRepository
 
     public async Task<IEnumerable<DestinationDto>> GetAllDestinationsByUserId(Guid userId)
     {
-        // var destinations =
-        //     await _destinationBucketDbContext.Set<Destination>()
-        //             .Where(d => d.UserId == userId)
-        //             .ToListAsync() as
-        //         IEnumerable<Destination>;
-
         var destinations =
             (from E in _destinationBucketDbContext.Set<Destination>()
                     .Where(d => d.UserId == userId)
@@ -128,5 +122,28 @@ public class DestinationRepository : IDestinationRepository
             ) as IEnumerable<DestinationDto>;
 
         return Task.FromResult(publicDestinations);
+    }
+
+    public async Task DeleteFromPublicDestinationByDestinationIdAndUserIdAsync(Guid destinationId, Guid userId)
+    {
+        var publicDestination = _destinationBucketDbContext.Set<PublicDestinations>()
+            .FirstOrDefault(pd => pd.DestinationId == destinationId && pd.UserId == userId);
+
+        if (publicDestination is null)
+        {
+            throw new RepositoryException("Invalid destination");
+        }
+
+        _destinationBucketDbContext.Set<PublicDestinations>().Remove(publicDestination);
+        await _destinationBucketDbContext.SaveChangesAsync();
+    }
+
+    public async Task DeleteFromPublicDestinationByDestinationIdAsync(Guid destinationId)
+    {
+        await _destinationBucketDbContext.Set<PublicDestinations>()
+            .Where(pd => pd.DestinationId == destinationId)
+            .ExecuteDeleteAsync();
+
+        await _destinationBucketDbContext.SaveChangesAsync();
     }
 }

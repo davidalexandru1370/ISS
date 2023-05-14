@@ -12,5 +12,6 @@ public interface IDestinationRepository
     public Task<Destination> UpdateDestinationAsync(Destination destination);
     public Task AddDestinationToPublicListAsync(PublicDestinations publicDestination);
     public Task<IEnumerable<DestinationDto>> GetAllPublicDestinations(Guid userId);
-
+    public Task DeleteFromPublicDestinationByDestinationIdAndUserIdAsync(Guid destinationId, Guid userId);
+    public Task DeleteFromPublicDestinationByDestinationIdAsync(Guid destinationId);
 }

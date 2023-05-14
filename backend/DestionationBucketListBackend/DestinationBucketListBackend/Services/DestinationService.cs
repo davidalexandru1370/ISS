@@ -76,6 +76,23 @@ public class DestinationService : IDestinationService
         return _destinationRepository.GetAllPublicDestinations(userId);
     }
 
+    public async Task RemoveFromFavoriteAsync(Guid destinationId, Guid userId)
+    {
+        var destination = await GetDestinationByIdAsync(destinationId);
+
+        if (destination.UserId != userId)
+        {
+            await _destinationRepository
+                .DeleteFromPublicDestinationByDestinationIdAndUserIdAsync(destinationId, userId);
+        }
+        else
+        {
+            await _destinationRepository.DeleteFromPublicDestinationByDestinationIdAsync(destinationId);
+            destination.IsPublic = false;
+            await _destinationRepository.UpdateDestinationAsync(destination);
+        }
+    }
+
     private async Task<string> UploadImageToFirebase(IFormFile destinationImage)
     {
         var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
