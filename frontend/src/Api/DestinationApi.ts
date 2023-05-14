@@ -78,29 +78,25 @@ export const deleteDestinationById = async (destination: DestinationDto) => {
 export const addToFavorite = async (destinationId: string) => {
   const url = DestinationEndpoints.markAsFavorite(destinationId);
   const header = createHeader(Methods.POST);
-  await fetch(url, header)
-    .then(async (response: Response) => {
-      if (response.status >= 400) {
-        return await response.json();
-      }
-    })
-    .then((error) => {
-      throw new Error(error);
-    });
+  await fetch(url, header).then(async (response: Response) => {
+    if (response.status >= 400) {
+      await response.text().then((error) => {
+        throw new Error(error);
+      });
+    }
+  });
 };
 
 export const removeFromFavorite = async (destinationId: string) => {
   const url = DestinationEndpoints.removeFromFavorite(destinationId);
   const header = createHeader(Methods.DELETE);
-  await fetch(url, header)
-    .then(async (response: Response) => {
-      if (response.status >= 400) {
-        return await response.json();
-      }
-    })
-    .then((error) => {
-      throw new Error(error);
-    });
+  await fetch(url, header).then(async (response: Response) => {
+    if (response.status >= 400) {
+      return await response.text().then((x) => {
+        throw new Error(x);
+      });
+    }
+  });
 };
 
 export const getPublicDestinations = async () => {

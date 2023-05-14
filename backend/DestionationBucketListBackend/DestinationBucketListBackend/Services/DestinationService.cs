@@ -109,7 +109,7 @@ public class DestinationService : IDestinationService
                     ThrowOnCancel =
                         true // when you cancel the upload, exception is thrown. By default no exception is thrown
                 })
-            .Child("images")
+            .Child(Guid.NewGuid().ToString())
             .PutAsync(stream, cancellation.Token);
 
         task.Progress.ProgressChanged += (s, e) => Console.WriteLine($"Progress: {e.Percentage} %");

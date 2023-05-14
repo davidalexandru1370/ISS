@@ -2,7 +2,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import StarIcon from "@mui/icons-material/Star";
 import { Box, Typography } from "@mui/material";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { DestinationDto } from "../../Model/DestinationDto";
 import styles from "./DestinationCard.module.css";
 
@@ -46,6 +46,14 @@ export const DestinationCard: FC<IDestinationCard> = ({
     cursor: "pointer",
     transition: "all 0.3s ease-in-out",
   });
+
+  useEffect(() => {
+    setFavoriteIconStyle({
+      ...favoriteIconStyle,
+      color: `${destination.isPublic === true ? "red" : "gray"}`,
+    });
+  }, [destination]);
+
   return (
     <div className={styles.container}>
       <FavoriteIcon
@@ -53,10 +61,6 @@ export const DestinationCard: FC<IDestinationCard> = ({
         className={styles.favoriteIconStyle}
         onClick={async () => {
           await onFavoriteClick();
-          setFavoriteIconStyle({
-            ...favoriteIconStyle,
-            color: `${destination.isPublic === true ? "red" : "gray"}`,
-          });
         }}
       />
       {children}
@@ -80,7 +84,7 @@ export const DestinationCard: FC<IDestinationCard> = ({
           <Box sx={{ display: "flex" }}>
             <StarIcon sx={{ ...iconStyle, cursor: "default" }} />
             <Typography sx={destinationDetailsStyle}>
-              {destination.numberOfTimesFavorated}
+              {destination.numberOfTimesFavorated || 0}
             </Typography>
           </Box>
         </Box>

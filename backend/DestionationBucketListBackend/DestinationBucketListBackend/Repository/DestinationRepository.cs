@@ -57,23 +57,23 @@ public class DestinationRepository : IDestinationRepository
             ) as IEnumerable<DestinationDto>;
 
         var privateDestinations = _destinationBucketDbContext.Set<Destination>()
-            .Where(d => d.UserId == userId && d.IsPublic == false).Select(d => new DestinationDto()
+            .Where(d => d.UserId == userId && d.IsPublic == false)
+            .Select(dest => new DestinationDto()
             {
                 IsPublic = false,
-                Description = d.Description,
-                Location = d.Location,
-                Price = d.Price,
-                Title = d.Title,
-                ImageUrl = d.ImageUrl,
-                OwnerEmail = d.User!.Email,
-                StartDate = d.StartDate,
-                StopDate = d.StopDate,
+                Description = dest.Description,
+                Location = dest.Location,
+                Price = dest.Price,
+                Title = dest.Title,
+                ImageUrl = dest.ImageUrl,
+                OwnerEmail = dest.User!.Email,
+                StartDate = dest.StartDate,
+                StopDate = dest.StopDate,
                 numberOfTimesFavorated = 0,
-                Id = d.Id
-            });
+                Id = dest.Id
+            }) as IEnumerable<DestinationDto>;
 
-        var destinations = publicDestinations.Concat(privateDestinations);
-
+        IEnumerable<DestinationDto> destinations = privateDestinations.Union(publicDestinations);
         return destinations;
     }
 

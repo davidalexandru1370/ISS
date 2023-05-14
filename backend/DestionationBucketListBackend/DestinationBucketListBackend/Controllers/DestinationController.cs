@@ -60,6 +60,7 @@ public class DestinationController : ControllerBase
     {
         try
         {
+            destination.UserId = User.GetUserId();
             var result = await _destinationService.UpdateDestinationAsync(destination);
             return Ok(result);
         }

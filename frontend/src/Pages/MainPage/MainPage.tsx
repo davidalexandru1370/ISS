@@ -10,6 +10,7 @@ import {
   addToFavorite,
   deleteDestinationById,
   getDestinationByUser,
+  removeFromFavorite,
 } from "../../Api/DestinationApi";
 import { AreYouSureModal } from "../../Components/AreYouSureModal/AreYouSureModal";
 import { DestinationModal } from "../../Components/DestinationModal/DestinationModal";
@@ -139,7 +140,31 @@ const MainPage = () => {
                       }}
                       onFavoriteClick={async () => {
                         try {
-                          await addToFavorite(d.id);
+                          if (d.isPublic === false) {
+                            await addToFavorite(d.id);
+                            const updatedList = destinations.map((dest) => {
+                              return dest.id === d.id
+                                ? ({
+                                    ...dest,
+                                    isPublic: true,
+                                    numberOfTimesFavorated: 1,
+                                  } as DestinationDto)
+                                : dest;
+                            });
+                            setDestinations(updatedList);
+                          } else {
+                            await removeFromFavorite(d.id);
+                            const updatedList = destinations.map((dest) => {
+                              return dest.id === d.id
+                                ? ({
+                                    ...dest,
+                                    isPublic: false,
+                                    numberOfTimesFavorated: 0,
+                                  } as DestinationDto)
+                                : dest;
+                            });
+                            setDestinations(updatedList);
+                          }
                         } catch (error) {
                           toast((error as Error).message, {
                             type: "error",
