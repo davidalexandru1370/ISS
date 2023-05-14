@@ -7,6 +7,7 @@ export interface DestinationDto {
   stopDate: string;
   price: number;
   isPublic: boolean;
+  numberOfTimesFavorated: number;
   imageUrl: string;
   ownerEmail: string;
 }

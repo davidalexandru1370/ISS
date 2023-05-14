@@ -79,7 +79,9 @@ export const DestinationCard: FC<IDestinationCard> = ({
           </Typography>
           <Box sx={{ display: "flex" }}>
             <StarIcon sx={{ ...iconStyle, cursor: "default" }} />
-            <Typography sx={destinationDetailsStyle}>0 </Typography>
+            <Typography sx={destinationDetailsStyle}>
+              {destination.numberOfTimesFavorated}
+            </Typography>
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
