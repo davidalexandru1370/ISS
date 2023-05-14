@@ -135,7 +135,7 @@ public class DestinationRepository : IDestinationRepository
                     StartDate = res.FirstOrDefault().Destination.StartDate,
                     StopDate = res.FirstOrDefault().Destination.StopDate,
                     numberOfTimesFavorated = res.Count(),
-                    IsPublic = true
+                    IsPublic = res.FirstOrDefault().UserId == userId
                 }
             ) as IEnumerable<DestinationDto>;
 
