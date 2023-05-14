@@ -105,9 +105,9 @@ public class DestinationRepository : IDestinationRepository
     public Task<IEnumerable<DestinationDto>> GetAllPublicDestinations(Guid userId)
     {
         var publicDestinations =
-            (from destination in _destinationBucketDbContext.Set<Destination>().Where(d => d.IsPublic == true).ToList()
-                join publicDestination in _destinationBucketDbContext.Set<PublicDestinations>().Include(pd => pd.User)
-                        .ToList() on
+            (from destination in _destinationBucketDbContext.Set<Destination>().Where(d => d.IsPublic == true)
+                join publicDestination in _destinationBucketDbContext.Set<PublicDestinations>()
+                        .Include(pd => pd.User) on
                     destination.Id equals publicDestination.DestinationId
                 group publicDestination by destination.Id
                 into res

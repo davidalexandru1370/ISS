@@ -35,6 +35,12 @@ const MainPage = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (isDestinationModalOpen === false && isAreYouSureModalOpen === false) {
+      setSelectedDestination(undefined);
+    }
+  }, [isDestinationModalOpen, isAreYouSureModalOpen]);
+
   return (
     <div className={styles.container}>
       {destinations === undefined ? (

@@ -1,17 +1,8 @@
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import StarIcon from "@mui/icons-material/Star";
-import {
-  Box,
-  ClickAwayListener,
-  Grow,
-  MenuItem,
-  MenuList,
-  Paper,
-  Popper,
-  Typography,
-} from "@mui/material";
-import React, { FC, useState } from "react";
+import { Box, Typography } from "@mui/material";
+import { FC, useState } from "react";
 import { DestinationDto } from "../../Model/DestinationDto";
 import styles from "./DestinationCard.module.css";
 
