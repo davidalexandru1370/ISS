@@ -1,6 +1,7 @@
 using DestinationBucketListBackend.DbContext;
 using DestinationBucketListBackend.Exceptions;
 using DestinationBucketListBackend.Model;
+using DestinationBucketListBackend.Model.DTO;
 using DestinationBucketListBackend.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,11 +32,35 @@ public class DestinationRepository : IDestinationRepository
         await _destinationBucketDbContext.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<Destination>> GetAllDestinationsByUserIdAsync(Guid userId)
+    public async Task<IEnumerable<DestinationDto>> GetAllDestinationsByUserId(Guid userId)
     {
+        // var destinations =
+        //     await _destinationBucketDbContext.Set<Destination>()
+        //             .Where(d => d.UserId == userId)
+        //             .ToListAsync() as
+        //         IEnumerable<Destination>;
+
         var destinations =
-            await _destinationBucketDbContext.Set<Destination>().Where(d => d.UserId == userId).ToListAsync() as
-                IEnumerable<Destination>;
+            (from E in _destinationBucketDbContext.Set<Destination>()
+                    .Where(d => d.UserId == userId)
+                join C in _destinationBucketDbContext.Set<PublicDestinations>() on E.Id equals C.DestinationId
+                group C by E.Id
+                into res
+                select new DestinationDto()
+                {
+                    Id = res.FirstOrDefault().Destination.Id,
+                    Description = res.FirstOrDefault().Destination.Description,
+                    Location = res.FirstOrDefault().Destination.Location,
+                    Price = res.FirstOrDefault().Destination.Price,
+                    Title = res.FirstOrDefault().Destination.Title,
+                    ImageUrl = res.FirstOrDefault().Destination.ImageUrl,
+                    OwnerEmail = res.FirstOrDefault().User.Email,
+                    StartDate = res.FirstOrDefault().Destination.StartDate,
+                    StopDate = res.FirstOrDefault().Destination.StopDate,
+                    numberOfTimesFavorated = res.Count(),
+                    IsPublic = res.FirstOrDefault().UserId == userId
+                }
+            ) as IEnumerable<DestinationDto>;
 
         return destinations;
     }
@@ -75,5 +100,33 @@ public class DestinationRepository : IDestinationRepository
         {
             throw new RepositoryException("Invalid operation");
         }
+    }
+
+    public Task<IEnumerable<DestinationDto>> GetAllPublicDestinations(Guid userId)
+    {
+        var publicDestinations =
+            (from destination in _destinationBucketDbContext.Set<Destination>().Where(d => d.IsPublic == true).ToList()
+                join publicDestination in _destinationBucketDbContext.Set<PublicDestinations>().Include(pd => pd.User)
+                        .ToList() on
+                    destination.Id equals publicDestination.DestinationId
+                group publicDestination by destination.Id
+                into res
+                select new DestinationDto()
+                {
+                    Id = res.FirstOrDefault().Destination.Id,
+                    Description = res.FirstOrDefault().Destination.Description,
+                    Location = res.FirstOrDefault().Destination.Location,
+                    Price = res.FirstOrDefault().Destination.Price,
+                    Title = res.FirstOrDefault().Destination.Title,
+                    ImageUrl = res.FirstOrDefault().Destination.ImageUrl,
+                    OwnerEmail = res.FirstOrDefault().User.Email,
+                    StartDate = res.FirstOrDefault().Destination.StartDate,
+                    StopDate = res.FirstOrDefault().Destination.StopDate,
+                    numberOfTimesFavorated = res.Count(),
+                    IsPublic = true
+                }
+            ) as IEnumerable<DestinationDto>;
+
+        return Task.FromResult(publicDestinations);
     }
 }

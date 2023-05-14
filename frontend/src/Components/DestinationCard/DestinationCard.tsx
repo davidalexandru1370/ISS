@@ -49,13 +49,12 @@ export const DestinationCard: FC<IDestinationCard> = ({
     zIndex: 12,
     top: 0,
     right: 0,
-    color: "gray",
+    color: `${destination.isPublic === true ? "red" : "gray"}`,
     margin: "5px",
     fontSize: "24px",
     cursor: "pointer",
     transition: "all 0.3s ease-in-out",
   });
-
   return (
     <div className={styles.container}>
       <FavoriteIcon
@@ -65,7 +64,7 @@ export const DestinationCard: FC<IDestinationCard> = ({
           await onFavoriteClick();
           setFavoriteIconStyle({
             ...favoriteIconStyle,
-            color: `${favoriteIconStyle.color === "red" ? "gray" : "red"}`,
+            color: `${destination.isPublic === true ? "red" : "gray"}`,
           });
         }}
       />

@@ -1,6 +1,8 @@
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using Microsoft.VisualBasic;
 
 namespace DestinationBucketListBackend.Model;
 
@@ -29,8 +31,10 @@ public class Destination
 
     [Required(ErrorMessage = "Price can not be empty or negative")]
     public double Price { get; set; }
-    
+
     public bool IsPublic { get; set; } = false;
     public string? ImageUrl { get; set; }
     [NotMapped] public IFormFile? DestinationImage { get; set; } = null!;
+
+    public ICollection<PublicDestinations> PublicDestinations { get; set; } = null!;
 }

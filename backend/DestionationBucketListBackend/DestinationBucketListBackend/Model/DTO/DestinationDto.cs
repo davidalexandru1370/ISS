@@ -22,5 +22,5 @@ public class DestinationDto
 
     public string OwnerEmail { get; set; } = null!;
 
-    public int? numberOfTimesFavorated { get; set; } = 0;
+    public int? numberOfTimesFavorated { get; set; } = 1;
 }

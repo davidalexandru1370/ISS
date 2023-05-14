@@ -6,6 +6,7 @@ export interface DestinationDto {
   startDate: string;
   stopDate: string;
   price: number;
+  isPublic: boolean;
   imageUrl: string;
   ownerEmail: string;
 }

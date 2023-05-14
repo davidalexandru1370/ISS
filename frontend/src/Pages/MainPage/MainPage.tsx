@@ -7,15 +7,16 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import {
+  addToFavorite,
   deleteDestinationById,
   getDestinationByUser,
 } from "../../Api/DestinationApi";
+import { AreYouSureModal } from "../../Components/AreYouSureModal/AreYouSureModal";
 import { DestinationModal } from "../../Components/DestinationModal/DestinationModal";
+import { PrivateDestinationCard } from "../../Components/PrivateDestinationCard/PrivateDestinationCard";
 import { DestinationDto } from "../../Model/DestinationDto";
 import styles from "./mainpage.module.css";
-import { DestinationCard } from "../../Components/DestinationCard/DestinationCard";
-import { AreYouSureModal } from "../../Components/AreYouSureModal/AreYouSureModal";
-import { PrivateDestinationCard } from "../../Components/PrivateDestinationCard/PrivateDestinationCard";
+import { toast } from "react-toastify";
 const MainPage = () => {
   const [isDestinationModalOpen, setIsDestinationModalOpen] =
     useState<boolean>(false);
@@ -130,7 +131,15 @@ const MainPage = () => {
                         setSelectedDestination(d);
                         setIsDestinationModalOpen(true);
                       }}
-                      onFavoriteClick={() => {}}
+                      onFavoriteClick={async () => {
+                        try {
+                          await addToFavorite(d.id);
+                        } catch (error) {
+                          toast((error as Error).message, {
+                            type: "error",
+                          });
+                        }
+                      }}
                     />
                   );
                 })}

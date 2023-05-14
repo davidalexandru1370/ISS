@@ -1,6 +1,7 @@
 using DestinationBucketListBackend.Enums;
 using DestinationBucketListBackend.Exceptions;
 using DestinationBucketListBackend.Model;
+using DestinationBucketListBackend.Model.DTO;
 using DestinationBucketListBackend.Repository.Interfaces;
 using DestinationBucketListBackend.Services.Interfaces;
 using Firebase.Auth;
@@ -29,9 +30,9 @@ public class DestinationService : IDestinationService
         return result;
     }
 
-    public async Task<IEnumerable<Destination>> GetAllDestinationsByUserIdAsync(Guid userId)
+    public Task<IEnumerable<DestinationDto>> GetAllDestinationsByUserId(Guid userId)
     {
-        var destinations = await _destinationRepository.GetAllDestinationsByUserIdAsync(userId);
+        var destinations = _destinationRepository.GetAllDestinationsByUserId(userId);
         return destinations;
     }
 
@@ -60,21 +61,19 @@ public class DestinationService : IDestinationService
     public async Task MarkDestinationAsPublicAsync(Guid destinationId, Guid userId)
     {
         var destination = await GetDestinationByIdAsync(destinationId);
+        destination.IsPublic = true;
+        PublicDestinations publicDestination = new()
+        {
+            UserId = userId,
+            DestinationId = destinationId
+        };
+        await _destinationRepository.UpdateDestinationAsync(destination);
+        await _destinationRepository.AddDestinationToPublicListAsync(publicDestination);
+    }
 
-        if (destination.UserId == userId)
-        {
-            destination.IsPublic = true;
-            await UpdateDestinationAsync(destination);
-        }
-        else
-        {
-            PublicDestinations publicDestination = new()
-            {
-                UserId = userId,
-                DestinationId = destinationId
-            };
-            await _destinationRepository.AddDestinationToPublicListAsync(publicDestination);
-        }
+    public Task<IEnumerable<DestinationDto>> GetAllPublicDestinations(Guid userId)
+    {
+        return _destinationRepository.GetAllPublicDestinations(userId);
     }
 
     private async Task<string> UploadImageToFirebase(IFormFile destinationImage)

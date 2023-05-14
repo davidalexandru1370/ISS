@@ -21,6 +21,7 @@ interface DestinationEndpoint {
   updateDestination: string;
   getDestinationsByUser: string;
   deleteDestination: string;
+  markAsFavorite: (destinationId: string) => string;
 }
 
 export const UserEndpoints: UserEndpoint = {
@@ -34,4 +35,7 @@ export const DestinationEndpoints: DestinationEndpoint = {
   addDestination: destinationBaseUrl + "add-destination",
   updateDestination: destinationBaseUrl + "update-destination",
   deleteDestination: destinationBaseUrl + "delete-destination",
+  markAsFavorite: (destinationId: string) => {
+    return destinationBaseUrl + "add-destination-to-public/" + destinationId;
+  },
 };

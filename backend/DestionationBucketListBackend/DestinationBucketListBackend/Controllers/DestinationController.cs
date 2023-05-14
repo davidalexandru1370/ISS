@@ -1,6 +1,7 @@
 using DestinationBucketListBackend.Exceptions;
 using DestinationBucketListBackend.ExtensionMethods;
 using DestinationBucketListBackend.Model;
+using DestinationBucketListBackend.Model.DTO;
 using DestinationBucketListBackend.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -75,7 +76,7 @@ public class DestinationController : ControllerBase
         try
         {
             var userId = User.GetUserId();
-            var result = await _destinationService.GetAllDestinationsByUserIdAsync(userId);
+            var result = await _destinationService.GetAllDestinationsByUserId(userId);
             return Ok(result);
         }
         catch (RepositoryException repositoryException)
@@ -109,9 +110,9 @@ public class DestinationController : ControllerBase
         }
     }
 
-    [HttpPut]
-    [Route("add-destination-to-public")]
-    public async Task<IActionResult> AddDestinationToBePublic(Guid destinationId)
+    [HttpPost]
+    [Route("add-destination-to-public/{destinationId:guid}")]
+    public async Task<IActionResult> AddDestinationToBePublic([FromRoute]Guid destinationId)
     {
         try
         {
@@ -126,6 +127,22 @@ public class DestinationController : ControllerBase
         catch (DestinationBucketException)
         {
             return Forbid();
+        }
+    }
+
+    [HttpGet]
+    [Route("get-public-destinations")]
+    public async Task<ActionResult<IEnumerable<DestinationDto>>> GetPublicDestinations()
+    {
+        try
+        {
+            var userId = User.GetUserId();
+            var result = await _destinationService.GetAllPublicDestinations(userId);
+            return Ok(result);
+        }
+        catch (RepositoryException)
+        {
+            return BadRequest();
         }
     }
 }

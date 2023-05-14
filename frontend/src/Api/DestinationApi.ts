@@ -74,3 +74,17 @@ export const deleteDestinationById = async (destination: DestinationDto) => {
 
   return data;
 };
+
+export const addToFavorite = async (destinationId: string) => {
+  const url = DestinationEndpoints.markAsFavorite(destinationId);
+  const header = createHeader(Methods.POST);
+  await fetch(url, header)
+    .then(async (response: Response) => {
+      if (response.status >= 400) {
+        return await response.json();
+      }
+    })
+    .then((error) => {
+      throw new Error(error);
+    });
+};
