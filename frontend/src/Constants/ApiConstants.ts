@@ -1,4 +1,10 @@
-export const baseUrl = "http://localhost:5041/";
+const PRODUCTION_DestinationBucket_URL = "https://mpp-2023.twilightparadox.com";
+const DEVELOPMENT_DestinationBucket_URL = "http://localhost:5041/";
+
+export const baseUrl =
+  process.env.NODE_ENV === "development"
+    ? DEVELOPMENT_DestinationBucket_URL
+    : PRODUCTION_DestinationBucket_URL;
 export const userController = "api/user/";
 export const destinationController = "api/destination/";
 

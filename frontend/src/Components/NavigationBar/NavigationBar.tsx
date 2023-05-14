@@ -88,7 +88,7 @@ export const NavigationBar = () => {
         </Box>
       </Box>
       <Box sx={{ menuItemBoxStyle, flexDirection: "column" }}>
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex", cursor: "pointer" }}>
           <LogoutIcon sx={{ width: "12px" }} />
           <Typography
             sx={menuItemTypographyStyle}
