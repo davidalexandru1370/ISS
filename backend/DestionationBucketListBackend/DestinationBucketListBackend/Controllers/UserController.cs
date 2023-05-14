@@ -65,7 +65,23 @@ public class UserController : ControllerBase
         {
             return Forbid();
         }
-        
+    }
+
+    [HttpPost]
+    [Route("logout")]
+    public ActionResult Logout()
+    {
+        var accessToken = HttpContext.Request.Cookies.Where(c => c.Key == "accessToken");
+        var refreshToken = HttpContext.Request.Cookies.Where(c => c.Key == "refreshToken");
+
+        if (accessToken == null || refreshToken == null)
+        {
+            return BadRequest();
+        }
+
+        _cookieUtilities.setCookiePrivate("accessToken", "", HttpContext, 2);
+        _cookieUtilities.setCookiePrivate("refreshToken", "", HttpContext, 2);
+        return Ok();
     }
 
     [HttpPost("register")]

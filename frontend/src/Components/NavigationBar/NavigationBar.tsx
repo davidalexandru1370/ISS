@@ -1,11 +1,13 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./navigationBar.module.css";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import LogoutIcon from "@mui/icons-material/Logout";
 import useCurrentPath from "../../Hooks/useCurrentPath";
 import { useNavigate } from "react-router-dom";
+import { AuthentificationContext } from "../../Context/AuthentificationContext";
+import { logout } from "../../Api/UserApi";
 const menuItemTypographyStyle = {
   fontSize: "14px",
   margin: "5px 0 0 5px",
@@ -28,6 +30,8 @@ const selectedBoxStyle = {
 export const NavigationBar = () => {
   const path = useCurrentPath();
   const navigate = useNavigate();
+
+  const { username } = useContext(AuthentificationContext);
 
   return (
     <div className={styles.content}>
@@ -68,7 +72,18 @@ export const NavigationBar = () => {
       </Box>
       <Box sx={menuItemBoxStyle}>
         <LogoutIcon sx={{ width: "12px" }} />
-        <Typography sx={menuItemTypographyStyle}>Log out</Typography>
+        <Typography
+          sx={menuItemTypographyStyle}
+          onClick={async () => {
+            await logout();
+            console.log("aici");
+            navigate("/login", {
+              replace: true,
+            });
+          }}
+        >
+          Log out
+        </Typography>
       </Box>
     </div>
   );

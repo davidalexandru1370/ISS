@@ -14,6 +14,7 @@ interface UserEndpoint {
   login: string;
   register: string;
   authorize: string;
+  logout: string;
 }
 
 interface DestinationEndpoint {
@@ -30,6 +31,7 @@ export const UserEndpoints: UserEndpoint = {
   login: baseUrl + userController + "authentificate",
   register: baseUrl + userController + "register",
   authorize: baseUrl + userController + "authorize",
+  logout: baseUrl + userController + "logout",
 };
 
 export const DestinationEndpoints: DestinationEndpoint = {

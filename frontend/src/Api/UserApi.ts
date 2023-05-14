@@ -41,8 +41,8 @@ export const authorizeUser = async (): Promise<UserDto | undefined> => {
   const header = createHeader(Methods.GET);
   let isAuthorized = await fetch(url, header)
     .then(async (response: Response) => {
-      if (response.status === 403) {
-        return false;
+      if (response.status === 403 || response.status === 401) {
+        return undefined;
       } else {
         return await response.json();
       }
@@ -55,4 +55,10 @@ export const authorizeUser = async (): Promise<UserDto | undefined> => {
     });
 
   return isAuthorized;
+};
+
+export const logout = async () => {
+  let url = UserEndpoints.logout;
+  const header = createHeader(Methods.POST);
+  await fetch(url, header);
 };
