@@ -1,4 +1,5 @@
-const PRODUCTION_DestinationBucket_URL = "https://mpp-2023.twilightparadox.com";
+const PRODUCTION_DestinationBucket_URL =
+  "https://mpp-2023.twilightparadox.com/";
 const DEVELOPMENT_DestinationBucket_URL = "http://localhost:5041/";
 
 export const baseUrl =
