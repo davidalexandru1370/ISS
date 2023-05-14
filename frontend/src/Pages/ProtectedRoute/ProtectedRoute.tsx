@@ -1,9 +1,8 @@
 import { FC, useContext, useEffect, useRef, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import { ProtectedRouteProps } from "../../Model/ProtectedRouteProps";
+import { Navigate } from "react-router-dom";
 import { authorizeUser } from "../../Api/UserApi";
-import { NavigationBar } from "../../Components/NavigationBar/NavigationBar";
 import { AuthentificationContext } from "../../Context/AuthentificationContext";
+import { ProtectedRouteProps } from "../../Model/ProtectedRouteProps";
 
 export const ProtectedRoute: FC<ProtectedRouteProps> = ({
   page,

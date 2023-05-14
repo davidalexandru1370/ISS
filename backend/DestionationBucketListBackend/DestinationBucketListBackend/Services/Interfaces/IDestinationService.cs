@@ -14,4 +14,5 @@ public interface IDestinationService
     public Task MarkDestinationAsPublicAsync(Guid destinationId, Guid userId);
     public Task<IEnumerable<DestinationDto>> GetAllPublicDestinations(Guid userId);
     public Task RemoveFromFavoriteAsync(Guid destinationId, Guid userId);
+    public Task AddDestinationToFavoriteAsync(Guid destinationId, Guid userId);
 }

@@ -93,6 +93,11 @@ public class DestinationService : IDestinationService
         }
     }
 
+    public async Task AddDestinationToFavoriteAsync(Guid destinationId, Guid userId)
+    {
+        await _destinationRepository.AddDestinationToFavoriteAsync(destinationId, userId);
+    }
+
     private async Task<string> UploadImageToFirebase(IFormFile destinationImage)
     {
         var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));

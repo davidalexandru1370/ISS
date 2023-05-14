@@ -170,4 +170,23 @@ public class DestinationController : ControllerBase
             return Forbid();
         }
     }
+
+    [HttpPost]
+    [Route("add-destination-to-favorite/{destinationId:guid}")]
+    public async Task<IActionResult> AddDestinationToFavorite([FromRoute] Guid destinationId)
+    {
+        try
+        {
+            var userId = User.GetUserId();
+            await _destinationService.AddDestinationToFavoriteAsync(destinationId, userId);
+        }
+        catch (RepositoryException repositoryException)
+        {
+            return BadRequest(repositoryException.Message);
+        }
+        catch (DestinationBucketException)
+        {
+            return Forbid();
+        }
+    }
 }

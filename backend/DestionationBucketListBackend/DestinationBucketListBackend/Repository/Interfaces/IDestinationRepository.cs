@@ -14,4 +14,5 @@ public interface IDestinationRepository
     public Task<IEnumerable<DestinationDto>> GetAllPublicDestinations(Guid userId);
     public Task DeleteFromPublicDestinationByDestinationIdAndUserIdAsync(Guid destinationId, Guid userId);
     public Task DeleteFromPublicDestinationByDestinationIdAsync(Guid destinationId);
+    public Task AddDestinationToFavoriteAsync(Guid destinationId, Guid userId);
 }

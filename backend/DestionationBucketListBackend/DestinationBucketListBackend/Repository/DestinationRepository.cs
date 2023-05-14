@@ -164,4 +164,22 @@ public class DestinationRepository : IDestinationRepository
 
         await _destinationBucketDbContext.SaveChangesAsync();
     }
+
+    public async Task AddDestinationToFavoriteAsync(Guid destinationId, Guid userId)
+    {
+        try
+        {
+            var publicDestinations = new PublicDestinations()
+            {
+                UserId = userId,
+                DestinationId = destinationId
+            };
+            await _destinationBucketDbContext.Set<PublicDestinations>().AddAsync(publicDestinations);
+            await _destinationBucketDbContext.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            throw new RepositoryException("Invalid destination or user");
+        }
+    }
 }

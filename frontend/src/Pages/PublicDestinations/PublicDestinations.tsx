@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./PublicDestinations.module.css";
 import { DestinationDto } from "../../Model/DestinationDto";
 import { Box, CircularProgress, Paper, Typography } from "@mui/material";
 import { getPublicDestinations } from "../../Api/DestinationApi";
 import { DestinationCard } from "../../Components/DestinationCard/DestinationCard";
+import { AuthentificationContext } from "../../Context/AuthentificationContext";
 export const PublicDestinations = () => {
   const [destinations, setDestinations] = useState<DestinationDto[]>();
-
+  const { email } = useContext(AuthentificationContext);
   useEffect(() => {
     getPublicDestinations().then((x) => {
       setDestinations(x);
@@ -55,7 +56,10 @@ export const PublicDestinations = () => {
                   return (
                     <DestinationCard
                       destination={d}
-                      onFavoriteClick={() => {}}
+                      onFavoriteClick={async () => {
+                        if (d.ownerEmail !== email) {
+                        }
+                      }}
                     ></DestinationCard>
                   );
                 })}
