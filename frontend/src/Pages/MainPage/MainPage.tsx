@@ -15,6 +15,7 @@ import { DestinationDto } from "../../Model/DestinationDto";
 import styles from "./mainpage.module.css";
 import { DestinationCard } from "../../Components/DestinationCard/DestinationCard";
 import { AreYouSureModal } from "../../Components/AreYouSureModal/AreYouSureModal";
+import { PrivateDestinationCard } from "../../Components/PrivateDestinationCard/PrivateDestinationCard";
 const MainPage = () => {
   const [isDestinationModalOpen, setIsDestinationModalOpen] =
     useState<boolean>(false);
@@ -53,7 +54,7 @@ const MainPage = () => {
       ) : (
         <>
           {
-            <>
+            <Box>
               <DestinationModal
                 isOpen={isDestinationModalOpen}
                 destination={selectedDestination}
@@ -119,7 +120,7 @@ const MainPage = () => {
               >
                 {destinations.map((d) => {
                   return (
-                    <DestinationCard
+                    <PrivateDestinationCard
                       destination={d}
                       onDeleteClick={() => {
                         setSelectedDestination(d);
@@ -134,7 +135,7 @@ const MainPage = () => {
                   );
                 })}
               </Paper>
-            </>
+            </Box>
           }
         </>
       )}

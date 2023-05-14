@@ -1,6 +1,5 @@
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import StarIcon from "@mui/icons-material/Star";
 import {
   Box,
@@ -16,11 +15,10 @@ import React, { FC, useState } from "react";
 import { DestinationDto } from "../../Model/DestinationDto";
 import styles from "./DestinationCard.module.css";
 
-interface IDestinationCard {
+export interface IDestinationCard {
   destination: DestinationDto;
-  onUpdateClick: () => void;
-  onDeleteClick: () => void;
   onFavoriteClick: () => void;
+  children?: any;
 }
 
 const iconStyle = {
@@ -43,9 +41,8 @@ const destinationDetailsStyle = {
 
 export const DestinationCard: FC<IDestinationCard> = ({
   destination,
-  onDeleteClick,
   onFavoriteClick,
-  onUpdateClick,
+  children,
 }) => {
   const [favoriteIconStyle, setFavoriteIconStyle] = useState({
     position: "absolute",
@@ -58,30 +55,6 @@ export const DestinationCard: FC<IDestinationCard> = ({
     cursor: "pointer",
     transition: "all 0.3s ease-in-out",
   });
-
-  const [isDestinationActionsVisible, setIsDestinationActionsVisible] =
-    useState<boolean>(false);
-  const anchorRef = React.useRef<SVGSVGElement>(null);
-
-  const handleClose = (event: Event | React.SyntheticEvent) => {
-    if (
-      anchorRef.current &&
-      anchorRef.current.contains(event.target as HTMLElement)
-    ) {
-      return;
-    }
-
-    setIsDestinationActionsVisible(false);
-  };
-
-  function handleListKeyDown(event: React.KeyboardEvent) {
-    if (event.key === "Tab") {
-      event.preventDefault();
-      setIsDestinationActionsVisible(false);
-    } else if (event.key === "Escape") {
-      setIsDestinationActionsVisible(false);
-    }
-  }
 
   return (
     <div className={styles.container}>
@@ -96,75 +69,7 @@ export const DestinationCard: FC<IDestinationCard> = ({
           });
         }}
       />
-
-      <div style={{ position: "absolute" }}>
-        <MoreVertIcon
-          id="destination-button"
-          ref={anchorRef}
-          aria-controls={
-            isDestinationActionsVisible ? "destination-menu" : undefined
-          }
-          aria-haspopup="true"
-          sx={{
-            ...favoriteIconStyle,
-            left: 0,
-            color: "white",
-            transition: "none",
-          }}
-          onClick={async () => {
-            setIsDestinationActionsVisible(true);
-          }}
-        />
-        <Popper
-          sx={{ zIndex: 10 }}
-          open={isDestinationActionsVisible}
-          anchorEl={anchorRef.current}
-          role={undefined}
-          placement="bottom-start"
-          transition
-          disablePortal
-        >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin:
-                  placement === "bottom-start" ? "left top" : "left bottom",
-              }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList
-                    autoFocusItem={isDestinationActionsVisible}
-                    id="destination-menu"
-                    aria-labelledby="destination-button"
-                    onKeyDown={handleListKeyDown}
-                  >
-                    <MenuItem
-                      onClick={(event) => {
-                        handleClose(event);
-                        onDeleteClick();
-                      }}
-                      sx={{ minWidth: "100px" }}
-                    >
-                      Delete
-                    </MenuItem>
-                    <MenuItem
-                      onClick={(event) => {
-                        handleClose(event);
-                        onUpdateClick();
-                      }}
-                      sx={{ minWidth: "100px" }}
-                    >
-                      Update
-                    </MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-      </div>
+      {children}
       <div className={styles.titleAndDescriptionContainer}>
         <img
           src={`${destination.imageUrl}`}
