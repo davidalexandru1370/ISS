@@ -15,7 +15,6 @@ export const createHeader = (
     mode: "cors",
     headers: {
       Accept: accept !== undefined ? accept : "application/json",
-      "Access-Control-Allow-Origin": "*",
     },
     credentials: "include",
   };
