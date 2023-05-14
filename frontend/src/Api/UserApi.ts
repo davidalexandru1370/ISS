@@ -1,0 +1,64 @@
+import { Methods, UserEndpoints } from "../Constants/ApiConstants";
+import { AuthResult } from "../Model/AuthResult";
+import { User } from "../Model/User";
+import { UserDto } from "../Model/UserDto";
+import { createHeader } from "../Utilities/Utilities";
+
+export const login = async (user: User) => {
+  let url = UserEndpoints.login;
+  const data: AuthResult = await fetch(url, createHeader(Methods.POST, user))
+    .then(async (respose: Response) => {
+      return await respose.json();
+    })
+    .then((result: AuthResult) => {
+      return result;
+    });
+
+  if (data.result === false) {
+    throw new Error(data.error!);
+  }
+
+  return data;
+};
+
+export const register = async (user: User) => {
+  let url = UserEndpoints.register;
+  let authResult = await fetch(url, createHeader(Methods.POST, user))
+    .then(async (response: Response) => {
+      return await response.json();
+    })
+    .then((authResult: AuthResult) => {
+      return authResult;
+    });
+
+  if (authResult.result === false) {
+    throw new Error(authResult.error!);
+  }
+};
+
+export const authorizeUser = async (): Promise<UserDto | undefined> => {
+  let url = UserEndpoints.authorize;
+  const header = createHeader(Methods.GET);
+  let isAuthorized = await fetch(url, header)
+    .then(async (response: Response) => {
+      if (response.status === 403 || response.status === 401) {
+        return undefined;
+      } else {
+        return await response.json();
+      }
+    })
+    .then((userDto: UserDto) => {
+      if (typeof userDto === "undefined") {
+        return undefined;
+      }
+      return userDto;
+    });
+
+  return isAuthorized;
+};
+
+export const logout = async () => {
+  let url = UserEndpoints.logout;
+  const header = createHeader(Methods.POST);
+  await fetch(url, header);
+};
