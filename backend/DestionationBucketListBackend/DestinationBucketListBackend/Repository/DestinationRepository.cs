@@ -36,8 +36,9 @@ public class DestinationRepository : IDestinationRepository
     {
         var publicDestinations =
             (from E in _destinationBucketDbContext.Set<Destination>()
-                where E.UserId == userId && E.IsPublic == true
+                where E.IsPublic == true
                 join C in _destinationBucketDbContext.Set<PublicDestinations>() on E.Id equals C.DestinationId
+                where C.UserId == userId
                 group C by E.Id
                 into res
                 select new DestinationDto()
