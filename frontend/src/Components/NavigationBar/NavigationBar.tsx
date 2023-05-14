@@ -8,6 +8,7 @@ import useCurrentPath from "../../Hooks/useCurrentPath";
 import { useNavigate } from "react-router-dom";
 import { AuthentificationContext } from "../../Context/AuthentificationContext";
 import { logout } from "../../Api/UserApi";
+import PersonIcon from "@mui/icons-material/Person";
 const menuItemTypographyStyle = {
   fontSize: "14px",
   margin: "5px 0 0 5px",
@@ -36,6 +37,22 @@ export const NavigationBar = () => {
   return (
     <div className={styles.content}>
       <Box>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            marginBottom: "20px",
+            flexDirection: "column",
+          }}
+        >
+          <PersonIcon sx={{ fontSize: "45px", marginLeft: "30%" }} />
+          <Typography
+            sx={{ fontSize: "18px", fontWeight: "100", marginLeft: "15%" }}
+          >
+            Hello, {username}
+          </Typography>
+        </Box>
+
         <Typography sx={{ fontSize: "11px", color: "blue" }}>
           MAIN MENU
         </Typography>
@@ -70,20 +87,22 @@ export const NavigationBar = () => {
           </Typography>
         </Box>
       </Box>
-      <Box sx={menuItemBoxStyle}>
-        <LogoutIcon sx={{ width: "12px" }} />
-        <Typography
-          sx={menuItemTypographyStyle}
-          onClick={async () => {
-            await logout();
-            console.log("aici");
-            navigate("/login", {
-              replace: true,
-            });
-          }}
-        >
-          Log out
-        </Typography>
+      <Box sx={{ menuItemBoxStyle, flexDirection: "column" }}>
+        <Box sx={{ display: "flex" }}>
+          <LogoutIcon sx={{ width: "12px" }} />
+          <Typography
+            sx={menuItemTypographyStyle}
+            onClick={async () => {
+              await logout();
+              console.log("aici");
+              navigate("/login", {
+                replace: true,
+              });
+            }}
+          >
+            Log out
+          </Typography>
+        </Box>
       </Box>
     </div>
   );
