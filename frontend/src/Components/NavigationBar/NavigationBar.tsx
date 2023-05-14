@@ -1,14 +1,14 @@
-import { Box, Typography } from "@mui/material";
-import React, { useContext } from "react";
-import styles from "./navigationBar.module.css";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import LogoutIcon from "@mui/icons-material/Logout";
-import useCurrentPath from "../../Hooks/useCurrentPath";
-import { useNavigate } from "react-router-dom";
-import { AuthentificationContext } from "../../Context/AuthentificationContext";
-import { logout } from "../../Api/UserApi";
 import PersonIcon from "@mui/icons-material/Person";
+import { Box, Typography } from "@mui/material";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../Api/UserApi";
+import { AuthentificationContext } from "../../Context/AuthentificationContext";
+import useCurrentPath from "../../Hooks/useCurrentPath";
+import styles from "./navigationBar.module.css";
 const menuItemTypographyStyle = {
   fontSize: "14px",
   margin: "5px 0 0 5px",

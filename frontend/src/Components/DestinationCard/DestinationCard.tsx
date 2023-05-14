@@ -2,10 +2,9 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import StarIcon from "@mui/icons-material/Star";
 import { Box, Typography } from "@mui/material";
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { DestinationDto } from "../../Model/DestinationDto";
 import styles from "./DestinationCard.module.css";
-import { AuthentificationContext } from "../../Context/AuthentificationContext";
 
 export interface IDestinationCard {
   destination: DestinationDto;
@@ -68,6 +67,7 @@ export const DestinationCard: FC<IDestinationCard> = ({
       <div className={styles.titleAndDescriptionContainer}>
         <img
           src={`${destination.imageUrl}`}
+          alt="image"
           className={styles.destinationImage}
         />
         <div className={styles.titleAndDescription}>

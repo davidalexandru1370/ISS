@@ -1,12 +1,12 @@
-import { Box, Button, Modal, TextField } from "@mui/material";
-import React, { FC, useEffect, useReducer, useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
-import DatePicker from "../DatePicker/DatePicker";
-import { AddDestinationDto } from "../../Model/AddDestinationDto";
-import { addDestination, updateDestination } from "../../Api/DestinationApi";
-import { toast } from "react-toastify";
-import { DestinationDto } from "../../Model/DestinationDto";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { Box, Modal, TextField } from "@mui/material";
+import { FC, useEffect, useReducer, useState } from "react";
+import { toast } from "react-toastify";
+import { addDestination, updateDestination } from "../../Api/DestinationApi";
+import { AddDestinationDto } from "../../Model/AddDestinationDto";
+import { DestinationDto } from "../../Model/DestinationDto";
+import DatePicker from "../DatePicker/DatePicker";
 
 interface IDestinationModalProps {
   onSubmitClick: (destination: DestinationDto) => Promise<void>;
@@ -67,9 +67,9 @@ export const DestinationModal: FC<IDestinationModalProps> = ({
     onClose();
   };
 
-  const validateDifferenceBetweenStartTimeAndEndTime = (): boolean => {
-    return destinationState.startDate <= destinationState.stopDate;
-  };
+  // const validateDifferenceBetweenStartTimeAndEndTime = (): boolean => {
+  //   return destinationState.startDate <= destinationState.stopDate;
+  // };
 
   const checkIfPriceIsNumber = (price: string) => {
     const numberPattern: RegExp = new RegExp(
