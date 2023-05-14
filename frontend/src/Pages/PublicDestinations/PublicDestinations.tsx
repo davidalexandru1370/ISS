@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./PublicDestinations.module.css";
 import { DestinationDto } from "../../Model/DestinationDto";
 import { Box, CircularProgress, Paper, Typography } from "@mui/material";
+import { getPublicDestinations } from "../../Api/DestinationApi";
+import { DestinationCard } from "../../Components/DestinationCard/DestinationCard";
 export const PublicDestinations = () => {
   const [destinations, setDestinations] = useState<DestinationDto[]>();
+
+  useEffect(() => {
+    getPublicDestinations().then((x) => {
+      setDestinations(x);
+    });
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -44,7 +52,12 @@ export const PublicDestinations = () => {
                 }}
               >
                 {destinations.map((d) => {
-                  return <></>;
+                  return (
+                    <DestinationCard
+                      destination={d}
+                      onFavoriteClick={() => {}}
+                    ></DestinationCard>
+                  );
                 })}
               </Paper>
             </Box>
