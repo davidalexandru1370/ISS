@@ -52,7 +52,7 @@ public class DestinationRepository : IDestinationRepository
                     StartDate = res.FirstOrDefault().Destination.StartDate,
                     StopDate = res.FirstOrDefault().Destination.StopDate,
                     numberOfTimesFavorated = res.Count(),
-                    IsPublic = res.FirstOrDefault().UserId == userId
+                    IsPublic = true
                 }
             ) as IEnumerable<DestinationDto>;
 
@@ -136,7 +136,7 @@ public class DestinationRepository : IDestinationRepository
                     StartDate = res.FirstOrDefault().Destination.StartDate,
                     StopDate = res.FirstOrDefault().Destination.StopDate,
                     numberOfTimesFavorated = res.Count(),
-                    IsPublic = true
+                    IsPublic = res.Any(r => r.UserId == userId)
                 }
             ) as IEnumerable<DestinationDto>;
 

@@ -73,12 +73,11 @@ public class DestinationService : IDestinationService
             {
                 throw new DestinationBucketException("Forbidden");
             }
-        }
-        else
-        {
+
             destination.IsPublic = true;
             await _destinationRepository.UpdateDestinationAsync(destination);
         }
+
 
         await _destinationRepository.AddDestinationToPublicListAsync(publicDestination);
     }

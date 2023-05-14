@@ -2,7 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "./PublicDestinations.module.css";
 import { DestinationDto } from "../../Model/DestinationDto";
 import { Box, CircularProgress, Paper, Typography } from "@mui/material";
-import { addToFavorite, getPublicDestinations } from "../../Api/DestinationApi";
+import {
+  addToFavorite,
+  getPublicDestinations,
+  removeFromFavorite,
+} from "../../Api/DestinationApi";
 import { DestinationCard } from "../../Components/DestinationCard/DestinationCard";
 import { AuthentificationContext } from "../../Context/AuthentificationContext";
 import { toast } from "react-toastify";
@@ -60,17 +64,33 @@ export const PublicDestinations = () => {
                       onFavoriteClick={async () => {
                         if (d.ownerEmail !== email) {
                           try {
-                            await addToFavorite(d.id);
-                            const updatedList = destinations.map((dest) => {
-                              return dest.id === d.id
-                                ? ({
-                                    ...dest,
-                                    isPublic: true,
-                                    numberOfTimesFavorated: 1,
-                                  } as DestinationDto)
-                                : dest;
-                            });
-                            setDestinations(updatedList);
+                            if (d.isPublic === false) {
+                              await addToFavorite(d.id);
+                              const updatedList = destinations.map((dest) => {
+                                return dest.id === d.id
+                                  ? ({
+                                      ...dest,
+                                      isPublic: true,
+                                      numberOfTimesFavorated:
+                                        d.numberOfTimesFavorated + 1,
+                                    } as DestinationDto)
+                                  : dest;
+                              });
+                              setDestinations(updatedList);
+                            } else {
+                              await removeFromFavorite(d.id);
+                              const updatedList = destinations.map((dest) => {
+                                return dest.id === d.id
+                                  ? ({
+                                      ...dest,
+                                      isPublic: false,
+                                      numberOfTimesFavorated:
+                                        d.numberOfTimesFavorated - 1,
+                                    } as DestinationDto)
+                                  : dest;
+                              });
+                              setDestinations(updatedList);
+                            }
                           } catch (error) {
                             toast((error as Error).message, {
                               type: "error",

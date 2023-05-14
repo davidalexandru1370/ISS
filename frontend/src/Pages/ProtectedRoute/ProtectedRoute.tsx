@@ -27,7 +27,6 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
     })();
     (async () => {
       await authorized.then((value) => {
-        console.log(value);
         setIsAuthorized(value !== undefined);
         if (value !== undefined) {
           setEmail(value.email);

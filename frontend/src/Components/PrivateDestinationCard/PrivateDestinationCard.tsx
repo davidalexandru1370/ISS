@@ -29,7 +29,6 @@ export const PrivateDestinationCard: FC<IPrivateDestinationCard> = ({
     useState<boolean>(false);
   const anchorRef = React.useRef<SVGSVGElement>(null);
   const { email } = useContext(AuthentificationContext);
-  console.log(email);
   const handleClose = (event: Event | React.SyntheticEvent) => {
     if (
       anchorRef.current &&
