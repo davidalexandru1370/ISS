@@ -54,76 +54,79 @@ export const PrivateDestinationCard: FC<IPrivateDestinationCard> = ({
         destination={destination}
         onFavoriteClick={onFavoriteClick}
       >
-        {email.localeCompare(destination.ownerEmail) === 0 && (
-          <div style={{ position: "absolute", top: 0, zIndex: 500 }}>
-            <MoreVertIcon
-              id="destination-button"
-              ref={anchorRef}
-              aria-controls={
-                isDestinationActionsVisible ? "destination-menu" : undefined
-              }
-              aria-haspopup="true"
-              sx={{
-                cursor: "pointer",
-                left: 0,
-                color: "white",
-                transition: "none",
-              }}
-              onClick={async () => {
-                setIsDestinationActionsVisible(true);
-              }}
-            />
-            <Popper
-              sx={{ zIndex: 10 }}
-              open={isDestinationActionsVisible}
-              anchorEl={anchorRef.current}
-              role={undefined}
-              placement="bottom-start"
-              transition
-              disablePortal
-            >
-              {({ TransitionProps, placement }) => (
-                <Grow
-                  {...TransitionProps}
-                  style={{
-                    transformOrigin:
-                      placement === "bottom-start" ? "left top" : "left bottom",
-                  }}
-                >
-                  <Paper>
-                    <ClickAwayListener onClickAway={handleClose}>
-                      <MenuList
-                        autoFocusItem={isDestinationActionsVisible}
-                        id="destination-menu"
-                        aria-labelledby="destination-button"
-                        onKeyDown={handleListKeyDown}
-                      >
-                        <MenuItem
-                          onClick={(event) => {
-                            handleClose(event);
-                            onDeleteClick();
-                          }}
-                          sx={{ minWidth: "100px" }}
+        {destination.isPublic === false &&
+          email.localeCompare(destination.ownerEmail) === 0 && (
+            <div style={{ position: "absolute", top: 0, zIndex: 500 }}>
+              <MoreVertIcon
+                id="destination-button"
+                ref={anchorRef}
+                aria-controls={
+                  isDestinationActionsVisible ? "destination-menu" : undefined
+                }
+                aria-haspopup="true"
+                sx={{
+                  cursor: "pointer",
+                  left: 0,
+                  color: "white",
+                  transition: "none",
+                }}
+                onClick={async () => {
+                  setIsDestinationActionsVisible(true);
+                }}
+              />
+              <Popper
+                sx={{ zIndex: 10 }}
+                open={isDestinationActionsVisible}
+                anchorEl={anchorRef.current}
+                role={undefined}
+                placement="bottom-start"
+                transition
+                disablePortal
+              >
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    style={{
+                      transformOrigin:
+                        placement === "bottom-start"
+                          ? "left top"
+                          : "left bottom",
+                    }}
+                  >
+                    <Paper>
+                      <ClickAwayListener onClickAway={handleClose}>
+                        <MenuList
+                          autoFocusItem={isDestinationActionsVisible}
+                          id="destination-menu"
+                          aria-labelledby="destination-button"
+                          onKeyDown={handleListKeyDown}
                         >
-                          Delete
-                        </MenuItem>
-                        <MenuItem
-                          onClick={(event) => {
-                            handleClose(event);
-                            onUpdateClick();
-                          }}
-                          sx={{ minWidth: "100px" }}
-                        >
-                          Update
-                        </MenuItem>
-                      </MenuList>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
-          </div>
-        )}
+                          <MenuItem
+                            onClick={(event) => {
+                              handleClose(event);
+                              onDeleteClick();
+                            }}
+                            sx={{ minWidth: "100px" }}
+                          >
+                            Delete
+                          </MenuItem>
+                          <MenuItem
+                            onClick={(event) => {
+                              handleClose(event);
+                              onUpdateClick();
+                            }}
+                            sx={{ minWidth: "100px" }}
+                          >
+                            Update
+                          </MenuItem>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            </div>
+          )}
       </DestinationCard>
     </div>
   );

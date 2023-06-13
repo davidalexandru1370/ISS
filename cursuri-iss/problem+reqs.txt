@@ -1,0 +1,22 @@
+Ingineria Sistemelor Software
+
+Idei generale
+
+	- la problemele propuse mai jos eu m-as comporta ca si un client care e concentrat pe obiective de business si caruia nu ii pasa de aspectele tehnice; scopul e de a-i face pe viitorii programatori sa realizeze ca e responsabilitatea lor ca viitori specialisti in informatie sa organizeze ideile clientului intr-un model coerent, sa identifice nevoi suplimentare de informatie, sa elaboreze si sa confirme un set de teste care sa asigure limitarea scopului proiectului si sa se asigure ca modelul dezvoltat de ei e mentenabil in viitor
+	-	daca mergem pe agile (kanban, scrum?) acestea merg mana in mana cu CI/CD; mai merg mana in mana cu managementul schimbarii; merg mana in mana cu automatizarea documentatiei; eu chiar as insista pe toate uneltele care sunt disponibile (asa numita “developer experience”); sunt limbaje care stau foarte bine la capitolul unelte si aceste unelte sunt disponibile atat in IDEuri cat si pe Github ca actions; chiar cred ca e fezabil sa le cerem toate astea pentru ca ecosistemele moderne permit si pentru ca e materia potrivita; mai degraba as simplifica problemele ca sa lasam timp pentru folosirea tuturor uneltelor de developer experience, inclusiv cu partea de modelare a lor
+	•	pentru partea de probleme eu inclin pentru web apps, pentru ca sunt cele mai raspandite, pentru ca toate aplicatiile includ oricum o forma de comunicare cu exteriorul si pentru ca celelalte genuri de aplicatii necesita cunostinte mult mai specializate; daca totusi vrem sa lasam optiuni as merge ca aceste probleme sa fie formulate ca sa permita rezolvarea lor ca web apps sau ca aplicatii desktop; asadar:
+	•	clientul doreste o aplicatie ce sa ruleze pe serverul companiei, cu o interfata web/ cu un api pentru aplicatiile de mobil si cu o zona de administrare a datelor
+	•	clientul doreste o aplicatie desktop de pe un calculator comun, unde angajatii se autentifica fiecare cu contul lor si acceseaza interfata GUI (GTK, WxForms, Electron, Webkit sau chiar Ncurses dar cross platform) a programului instalat pentru toti utilizatorii; as merge pentru aplicatie cross-platform ca sa avem modelare de deployment/build pe diferite platforme
+	•	aplicatia lucrata in echipe de 3-4, coordonata prin git pe Github
+	•	cu Merge Requests aprobate de macar un coleg in branch-ul de main si rebase-uri; 
+	•	MR-urile sa se foloseasca de Github actions pentru quality tools (alese in functie de limbaj) 
+	•	si MRurile aprobate sa faca deployuri de verifcare (staging) cu rularea testelor; 
+	•	releasurile verificate sunt tagged cu versiune si lanseaza build de versiune cu tot cu actions (pipeline) de creare a changelogului, a documentatiei de model si a artefactelor; 
+	•	deployul tagged marcheaza sfarsitul sprintului, se pot include in actions si metrici de sprint/issues burned; 
+	•	releasurile obligatoriu migreaza modelul de date daca e cazul, pentru developeri si client; 
+	•	releasurile de staging au sample data daca e cazul; 
+	•	se detaliaza explicit in model partea de update
+
+Problema de rezolvat:
+
+	1.	create a personal private vacation destinations bucket list app; a vacation destination is a place with a geolocation, title, image, description, stay dates; bucket list is private, each employee should be able to register and add private items; employee should be able to manage items, including removal; desktop app or web app; propose friendly display of items and ways to manage them; ask at least one time for friendliness feedback from the customer and incorporate the changes in the app; employee can cancel their account (GDPR) or modify it
